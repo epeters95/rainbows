@@ -16,7 +16,6 @@
     Rainbows.MovingObject.call(this, pos, vel, radius,
        Droplet.COLOR);
     this.light = light;
-    this.debug = debug;
     this.minAngle = 1000;
     this.maxAngle = 0;
   };
@@ -27,7 +26,7 @@
 
   Droplet.inherits(Rainbows.MovingObject);
   
-  Droplet.mistArray = function(startX, startY, light, width=30, height=5, separationPx=5, velocity=[8, 0]) {
+  Droplet.mistArray = function(startX, startY, light, width=23, height=10, separationPx=10, velocity=[6, 0]) {
 
     // 2D array of the moving droplets
     let mists = []
@@ -89,15 +88,22 @@
 
     const hue = (t) => {
       let i = Math.floor( t / interval)
+      if (fArray[i] === undefined) {
+        return null;
+      }
       return fArray[i].map( (f) => Math.round(f(t)) );
     }
 
     let theta = this.angleTo(this.light)
     let hues = hue(theta)
 
-    r = hues[0]
-    g = hues[1]
-    b = hues[2]
+    if (hues) {
+
+      r = hues[0]
+      g = hues[1]
+      b = hues[2]
+
+    }
 
     let color = 'rgb(' + r + ',' + g + ',' + b + ')';
     return color;

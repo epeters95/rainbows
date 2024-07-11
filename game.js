@@ -3,15 +3,16 @@
   var Droplet = Rainbows.Droplet;
   var Light = Rainbows.Light;
   
-  var Game = Rainbows.Game = function(ctx) {
-    this.ctx = ctx;
+  var Game = Rainbows.Game = function(canvas) {
+    this.canvas = canvas;
+    this.ctx = canvas.getContext('2d');
     this.best = 100000;
     this.reset();
   };
 
   Game.prototype.reset = function() {
     
-    this.light = new Light([300, 300], [0, 0])
+    this.light = new Light([300, 300], [0, 0], this.canvas)
 
     this.droplets = Droplet.mistArray(10, 10, this.light);
 
@@ -38,9 +39,9 @@
     this.light.draw(this.ctx);
 
     
-    this.ctx.font = "60px Comfortaa, sans-serif";
+    // this.ctx.font = "60px Comfortaa, sans-serif";
     this.ctx.fillStyle = "grey";
-    this.ctx.fillText("Rainbows :)", 320, 250);
+    // this.ctx.fillText("Rainbows :)", 320, 250);
     this.ctx.font = "20px Comfortaa, sans-serif";
     this.ctx.fillText("use 'W A S D' keys to move and Space to fire", 250, 400);
     this.ctx.fillText("press Space to start", 360, 450);
