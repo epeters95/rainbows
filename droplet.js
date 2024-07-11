@@ -16,11 +16,17 @@
     Rainbows.MovingObject.call(this, pos, vel, radius,
        Droplet.COLOR);
     this.light = light;
+    this.debug = debug;
+    this.minAngle = 1000;
+    this.maxAngle = 0;
   };
+
   
   Droplet.RADIUS = 10;
   Droplet.COLOR = "rgb(136, 180, 255)";
 
+  Droplet.inherits(Rainbows.MovingObject);
+  
   Droplet.mistArray = function(startX, startY, light, width=30, height=5, separationPx=5, velocity=[8, 0]) {
 
     // 2D array of the moving droplets
@@ -41,12 +47,21 @@
     return mists;
   }
 
-  Droplet.draw = function(ctx) {
+  Droplet.prototype.draw = function(ctx) {
     this.color = this.getColor();
-    this.prototype.draw(ctx)
+    ctx.beginPath()
+    ctx.arc(
+      this.pos[0],
+      this.pos[1],
+      this.radius,
+      0,
+      2 * Math.PI
+    );
+    ctx.strokeStyle = this.color;
+    ctx.stroke();
   }
 
-  Droplet.getColor = function() {
+  Droplet.prototype.getColor = function() {
 
     let colVals = Droplet.COLOR.substring( Droplet.COLOR.indexOf('(') + 1,
                                            Droplet.COLOR.indexOf(')') - 1);
@@ -54,28 +69,39 @@
     let g = parseInt(colVals[1]);
     let b = parseInt(colVals[2]);
 
-    // // Parametrized Hue function
-    // let maxIterations = 1000;
-    // let interval = maxIterations / 6.0;
+    // Parametrized Hue function
+    let maxIterations = 2.9;
+    let interval = maxIterations / 6.0;
 
-    // let fArray = [
-    //   [],
-    //   [],
-    //   [],
-    //   [],
-    //   [],
-    //   []
-    // ];
+    let maxF = () => 255;
+    let minF = () => 0;
+    let incF = (t) => (255 / interval) * (t % interval);
+    let decF = (t) => (255 / interval) * (interval - (t % interval));
 
-    // const hueFunction = (t) => {
+    let fArray = [
+      [ maxF, incF, minF ],
+      [ decF, maxF, minF ],
+      [ minF, maxF, incF ],
+      [ minF, decF, maxF ],
+      [ incF, minF, maxF ],
+      [ maxF, minF, decF ]
+    ];
 
-    // }
+    const hue = (t) => {
+      let i = Math.floor( t / interval)
+      return fArray[i].map( (f) => Math.round(f(t)) );
+    }
+
+    let theta = this.angleTo(this.light)
+    let hues = hue(theta)
+
+    r = hues[0]
+    g = hues[1]
+    b = hues[2]
 
     let color = 'rgb(' + r + ',' + g + ',' + b + ')';
     return color;
   }
-
-  Droplet.inherits(Rainbows.MovingObject);
 
 
 })(this);
