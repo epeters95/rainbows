@@ -22,6 +22,50 @@
 
     this.startTime;
     this.time = 0;
+
+    const canvasPosition = {
+      x: this.canvas.offsetLeft,
+      y: this.canvas.offsetTop
+    };
+    const  sliderLength = 500;
+    this.held = false;
+    this.slider = new Rainbows.Slider(200, 10, 100, this.sliderLength)
+
+    this.canvas.addEventListener('mousedown', function(e) {
+
+      // mouse position relative to the browser window
+      const mouse = { 
+          x: e.pageX - canvasPosition.x,
+          y: e.pageY - canvasPosition.y
+      }
+      
+      const x = this.slider.getPlace();
+
+      const between = (a, b, c) => { return (a >= b && a <= c) };
+
+      if (!this.held && between(mouse.x, x - 5, x + 5) && between(mouse.y, this.slider.y, this.slider.y + 30)) {
+        this.held = true;
+      }
+    });
+
+    this.canvas.addEventListener('mouseup', function(e) {
+      this.held = false;
+    });
+
+    this.canvas.addEventListener('mousemove', function(e) {
+      if (this.held) {
+        const mouse = {
+          x: e.pageX - canvasPosition.x,
+          y: e.pageY - canvasPosition.y
+        }
+        this.slider.leftWidth = mouse.x - this.slider.x;
+
+        if (this.slider.x > 200 + sliderLength) {
+          this.slider.x = 200 + sliderLength;
+        }
+      }
+    });
+
     window.clearInterval(this.endID);
   };
  
@@ -38,6 +82,8 @@
 
     this.light.draw(this.ctx);
 
+    this.drawSlider();
+
     
     // this.ctx.font = "60px Comfortaa, sans-serif";
     this.ctx.fillStyle = "grey";
@@ -50,6 +96,31 @@
     this.ctx.fillStyle = "rgba(53, 143, 90, 0.6)";
     
   };
+
+  Game.prototype.drawSlider = function() {
+    var x = 200;
+    var y = 10;
+    var height = 30;
+
+    var widthL = this.slider.leftWidth;
+    var widthR = this.sliderLength - widthL;
+    //Left side
+    this.ctx.beginPath();
+    this.ctx.fillStyle = 'rgba(20, 20, 90, 0.4)';
+    this.ctx.fillRect(x, y, widthL, height);
+
+    //Slider
+    this.ctx.beginPath();
+    this.ctx.moveTo(x + widthL, y - 2);
+    this.ctx.lineTo(x + widthL, y + height + 2);
+    this.ctx.strokeStyle = '#00CC00';
+    this.ctx.stroke();
+
+    //Right Side
+    this.ctx.beginPath();
+    this.ctx.fillStyle = 'rgba(20, 20, 90, 0.4)';
+    this.ctx.fillRect(x + widthL + 1, y, widthR, height);
+  }
 
   Game.prototype.move = function() {
     for (var i = 0; i < this.droplets.length; i++) {
