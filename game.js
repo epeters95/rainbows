@@ -2,6 +2,8 @@
   var Rainbows = root.Rainbows = (root.Rainbows || {});
   var Droplet = Rainbows.Droplet;
   var Light = Rainbows.Light;
+  var Slider = Rainbows.Slider;
+  const sliderLength = 500;
   
   var Game = Rainbows.Game = function(canvas) {
     this.canvas = canvas;
@@ -27,10 +29,11 @@
       x: this.canvas.offsetLeft,
       y: this.canvas.offsetTop
     };
-    const  sliderLength = 500;
-    this.held = false;
-    this.slider = new Rainbows.Slider(200, 10, 100, this.sliderLength)
 
+    this.held = false;
+    this.slider = new Slider(200, 10, 100, sliderLength)
+
+    let that = this;
     this.canvas.addEventListener('mousedown', function(e) {
 
       // mouse position relative to the browser window
@@ -39,29 +42,29 @@
           y: e.pageY - canvasPosition.y
       }
       
-      const x = this.slider.getPlace();
+      const x = that.slider.getPlace();
 
       const between = (a, b, c) => { return (a >= b && a <= c) };
 
-      if (!this.held && between(mouse.x, x - 5, x + 5) && between(mouse.y, this.slider.y, this.slider.y + 30)) {
-        this.held = true;
+      if (!that.held && between(mouse.x, x - 5, x + 5) && between(mouse.y, that.slider.y, that.slider.y + 30)) {
+        that.held = true;
       }
     });
 
     this.canvas.addEventListener('mouseup', function(e) {
-      this.held = false;
+      that.held = false;
     });
 
     this.canvas.addEventListener('mousemove', function(e) {
-      if (this.held) {
+      if (that.held) {
         const mouse = {
           x: e.pageX - canvasPosition.x,
           y: e.pageY - canvasPosition.y
         }
-        this.slider.leftWidth = mouse.x - this.slider.x;
+        that.slider.leftWidth = mouse.x - that.slider.x;
 
-        if (this.slider.x > 200 + sliderLength) {
-          this.slider.x = 200 + sliderLength;
+        if (that.slider.x > 200 + sliderLength) {
+          that.slider.x = 200 + sliderLength;
         }
       }
     });
@@ -103,7 +106,7 @@
     var height = 30;
 
     var widthL = this.slider.leftWidth;
-    var widthR = this.sliderLength - widthL;
+    var widthR = sliderLength - widthL;
     //Left side
     this.ctx.beginPath();
     this.ctx.fillStyle = 'rgba(20, 20, 90, 0.4)';
