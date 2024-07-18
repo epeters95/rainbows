@@ -15,8 +15,9 @@
   Game.prototype.reset = function() {
     
     this.light = new Light([300, 300], [0, 0], this.canvas)
+    this.slider = new Slider(200, 10, 100, sliderLength)
 
-    this.droplets = Droplet.mistArray(10, 10, this.light);
+    this.droplets = Droplet.mistArray(10, 10, this.light, this.slider);
 
 
     this.titleFade = 1;
@@ -31,7 +32,6 @@
     };
 
     this.held = false;
-    this.slider = new Slider(200, 10, 100, sliderLength)
 
     let that = this;
     this.canvas.addEventListener('mousedown', function(e) {

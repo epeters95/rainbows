@@ -10,7 +10,7 @@
     this.prototype = new Surrogate();
   };
 
-  var Droplet = Rainbows.Droplet = function(pos, vel, light) {
+  var Droplet = Rainbows.Droplet = function(pos, vel, light, slider) {
     // var radius = 5 + Math.random() * 6;
     var radius = 10;
     Rainbows.MovingObject.call(this, pos, vel, radius,
@@ -18,6 +18,7 @@
     this.light = light;
     this.minAngle = 1000;
     this.maxAngle = 0;
+    this.slider = slider;
   };
 
   
@@ -26,7 +27,12 @@
 
   Droplet.inherits(Rainbows.MovingObject);
   
-  Droplet.mistArray = function(startX, startY, light, width=23, height=10, separationPx=10, velocity=[6, 0]) {
+  Droplet.mistArray = function(startX, startY, light, slider) {
+
+    let width        = 23;
+    let height       = 10;
+    let separationPx = 10;
+    let velocity     = [6, 0];
 
     // 2D array of the moving droplets
     let mists = []
@@ -39,7 +45,7 @@
 
       for (let j = startY; j < (startY + totalHeight); j += iterSize) {
 
-        mists.push(new Droplet([i, j], velocity, light))
+        mists.push(new Droplet([i, j], velocity, light, slider))
 
       }
     }
@@ -71,11 +77,12 @@
     // Parametrized Hue function
     let maxIterations = 2.9;
     let interval = maxIterations / 6.0;
+    let period = this.slider.getRatio() * maxIterations
 
     let maxF = () => 255;
     let minF = () => 0;
-    let incF = (t) => (255 / interval) * (t % interval);
-    let decF = (t) => (255 / interval) * (interval - (t % interval));
+    let incF = (t) => (255 / interval) * ((t + period) % interval);
+    let decF = (t) => (255 / interval) * (interval - ((t + period) % interval));
 
     let fArray = [
       [ maxF, incF, minF ],
@@ -87,7 +94,7 @@
     ];
 
     const hue = (t) => {
-      let i = Math.floor( t / interval)
+      let i = Math.floor( (t + period) / interval)
       if (fArray[i] === undefined) {
         return null;
       }
