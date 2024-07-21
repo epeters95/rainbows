@@ -14,10 +14,10 @@
 
   Game.prototype.reset = function() {
     
-    this.light = new Light([300, 300], [0, 0], this.canvas)
+    this.light = new Light([450, 250], [0, 0], this.canvas)
     this.slider = new Slider(200, 10, 100, sliderLength)
 
-    this.droplets = Droplet.mistArray(10, 10, this.light, this.slider);
+    this.droplets = Droplet.mistArray(30, 70, this.light, this.slider);
 
 
     this.titleFade = 1;
@@ -88,16 +88,9 @@
     this.drawSlider();
 
     
-    // this.ctx.font = "60px Comfortaa, sans-serif";
     this.ctx.fillStyle = "grey";
-    // this.ctx.fillText("Rainbows :)", 320, 250);
     this.ctx.font = "20px Comfortaa, sans-serif";
-    this.ctx.fillText("use 'W A S D' keys to move and Space to fire", 250, 400);
-    this.ctx.fillText("press Space to start", 360, 450);
-
-    this.ctx.font = "20px Comfortaa, sans-serif";
-    this.ctx.fillStyle = "rgba(53, 143, 90, 0.6)";
-    
+    this.ctx.fillText("rotation", 95, 32);
   };
 
   Game.prototype.drawSlider = function() {
@@ -116,7 +109,7 @@
     this.ctx.beginPath();
     this.ctx.moveTo(x + widthL, y - 2);
     this.ctx.lineTo(x + widthL, y + height + 2);
-    this.ctx.strokeStyle = '#00CC00';
+    this.ctx.strokeStyle = '#000000';
     this.ctx.stroke();
 
     //Right Side

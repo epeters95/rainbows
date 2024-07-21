@@ -51,8 +51,8 @@
     canvas.addEventListener('mouseexit', dragOff)
   };
   
-  Light.RADIUS = 10;
-  Light.COLOR = "rgb(255, 255, 40)";
+  Light.RADIUS = 16;
+  Light.COLOR = "rgb(0, 0, 0)";
 
   Light.inherits(Rainbows.MovingObject);
 

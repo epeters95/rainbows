@@ -75,7 +75,7 @@
     let b = parseInt(colVals[2]);
 
     // Parametrized Hue function
-    let maxIterations = 2.9;
+    let maxIterations = 6.283;
     let interval = maxIterations / 6.0;
     let period = this.slider.getRatio() * maxIterations
 
@@ -93,16 +93,26 @@
       [ maxF, minF, decF ]
     ];
 
-    const hue = (t) => {
-      let i = Math.floor( (t + period) / interval)
+    const hue = (t, deltas, x) => {
+      let i = Math.floor( (t + period) / interval) % 6
       if (fArray[i] === undefined) {
         return null;
       }
-      return fArray[i].map( (f) => Math.round(f(t)) );
+      return fArray[i].map( (f, idx) => {
+        return Math.abs( Math.round(f(t)) - deltas[idx](x) );
+      })
     }
 
     let theta = this.angleTo(this.light)
-    let hues = hue(theta)
+    let x = this.pos[0];
+
+    let deltas = [
+      (t) => Math.cos(t * 3.14  / 200) * maxIterations * 10,
+      (t) => Math.sin(t * 3.14 / 200) * maxIterations * 20,
+      (t) => -Math.cos(t * 3.14 / 200) * maxIterations * 10
+    ]
+
+    let hues = hue(theta, deltas, x);
 
     if (hues) {
 
