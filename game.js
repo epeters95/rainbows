@@ -14,10 +14,10 @@
 
   Game.prototype.reset = function() {
     
-    this.light = new Light([450, 250], [0, 0], this.canvas)
+    this.light = new Light([450, 450], [0, 0], this.canvas)
     this.slider = new Slider(200, 10, 100, sliderLength)
 
-    this.droplets = Droplet.mistArray(30, 70, this.light, this.slider);
+    this.droplets = Droplet.mistArray(30, 180, this.light, this.slider);
 
 
     this.titleFade = 1;
@@ -78,6 +78,8 @@
   
   Game.prototype.draw = function() {
     this.ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+    this.ctx.fillStyle = "black";
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     for (var i = 0; i < this.droplets.length; i++) {
       this.droplets[i].draw(this.ctx);
@@ -102,19 +104,19 @@
     var widthR = sliderLength - widthL;
     //Left side
     this.ctx.beginPath();
-    this.ctx.fillStyle = 'rgba(20, 20, 90, 0.4)';
+    this.ctx.fillStyle = 'grey';
     this.ctx.fillRect(x, y, widthL, height);
 
     //Slider
     this.ctx.beginPath();
     this.ctx.moveTo(x + widthL, y - 2);
     this.ctx.lineTo(x + widthL, y + height + 2);
-    this.ctx.strokeStyle = '#000000';
+    this.ctx.strokeStyle = '#FFFFFF';
     this.ctx.stroke();
 
     //Right Side
     this.ctx.beginPath();
-    this.ctx.fillStyle = 'rgba(20, 20, 90, 0.4)';
+    this.ctx.fillStyle = 'grey';
     this.ctx.fillRect(x + widthL + 1, y, widthR, height);
   }
 
@@ -132,7 +134,7 @@
     for (var i = 0; i < this.droplets.length; i++) {
       var droplet = this.droplets[i];
       droplet.pos[0] = droplet.pos[0] % 900;
-      droplet.pos[1] = droplet.pos[1] % 500;
+      droplet.pos[1] = droplet.pos[1] % 900;
       if (droplet.pos[0] < 0) {
         droplet.pos[0] += 900;
       }
@@ -144,7 +146,7 @@
   
   Game.prototype.isOutOfBounds = function(object) {
     if ((object.pos[0] < 0 || object.pos[0] > 900) || 
-      (object.pos[1] < 0 || object.pos[1] > 500) ) {
+      (object.pos[1] < 0 || object.pos[1] > 900) ) {
       return true;
     }
     return false

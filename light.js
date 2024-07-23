@@ -52,7 +52,7 @@
   };
   
   Light.RADIUS = 16;
-  Light.COLOR = "rgb(0, 0, 0)";
+  Light.COLOR = "#FFFFFF";
 
   Light.inherits(Rainbows.MovingObject);
 
