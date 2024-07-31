@@ -16,8 +16,9 @@
     
     this.light = new Light([450, 450], [0, 0], this.canvas)
     this.slider = new Slider(200, 10, 100, sliderLength)
+    this.shiftSlider = new Slider(200, 850, 10, sliderLength)
 
-    this.droplets = Droplet.mistArray(30, 180, this.light, this.slider);
+    this.droplets = Droplet.mistArray(30, 180, this.light, this.slider, this.shiftSlider);
 
 
     this.titleFade = 1;
@@ -32,6 +33,7 @@
     };
 
     this.held = false;
+    this.heldShift = false;
 
     let that = this;
     this.canvas.addEventListener('mousedown', function(e) {
@@ -42,17 +44,24 @@
           y: e.pageY - canvasPosition.y
       }
       
-      const x = that.slider.getPlace();
+      let x = that.slider.getPlace();
 
       const between = (a, b, c) => { return (a >= b && a <= c) };
 
       if (!that.held && between(mouse.x, x - 5, x + 5) && between(mouse.y, that.slider.y, that.slider.y + 30)) {
         that.held = true;
       }
+
+      x = that.shiftSlider.getPlace();
+
+      if (!that.heldShift && between(mouse.x, x - 5, x + 5) && between(mouse.y, that.shiftSlider.y, that.shiftSlider.y + 30)) {
+        that.heldShift = true;
+      }
     });
 
     this.canvas.addEventListener('mouseup', function(e) {
       that.held = false;
+      that.heldShift = false;
     });
 
     this.canvas.addEventListener('mousemove', function(e) {
@@ -65,6 +74,17 @@
 
         if (that.slider.x > 200 + sliderLength) {
           that.slider.x = 200 + sliderLength;
+        }
+      }
+      if (that.heldShift) {
+        const mouse = {
+          x: e.pageX - canvasPosition.x,
+          y: e.pageY - canvasPosition.y
+        }
+        that.shiftSlider.leftWidth = mouse.x - that.shiftSlider.x;
+
+        if (that.shiftSlider.x > 200 + sliderLength) {
+          that.shiftSlider.x = 200 + sliderLength;
         }
       }
     });
@@ -87,7 +107,8 @@
 
     this.light.draw(this.ctx);
 
-    this.drawSlider();
+    this.drawSlider(this.slider, 10);
+    this.drawSlider(this.shiftSlider, 850);
 
     
     this.ctx.fillStyle = "grey";
@@ -95,12 +116,11 @@
     this.ctx.fillText("rotation", 95, 32);
   };
 
-  Game.prototype.drawSlider = function() {
+  Game.prototype.drawSlider = function(slider, y) {
     var x = 200;
-    var y = 10;
     var height = 30;
 
-    var widthL = this.slider.leftWidth;
+    var widthL = slider.leftWidth;
     var widthR = sliderLength - widthL;
     //Left side
     this.ctx.beginPath();

@@ -10,7 +10,7 @@
     this.prototype = new Surrogate();
   };
 
-  var Droplet = Rainbows.Droplet = function(pos, vel, light, slider) {
+  var Droplet = Rainbows.Droplet = function(pos, vel, light, slider, shiftSlider) {
     // var radius = 5 + Math.random() * 6;
     var radius = 10;
     Rainbows.MovingObject.call(this, pos, vel, radius,
@@ -19,6 +19,7 @@
     this.minAngle = 1000;
     this.maxAngle = 0;
     this.slider = slider;
+    this.shiftSlider = shiftSlider;
   };
 
   
@@ -27,8 +28,8 @@
 
   Droplet.inherits(Rainbows.MovingObject);
   
-  Droplet.mistArray = function(startX, startY, light, slider) {
-
+  Droplet.mistArray = function(startX, startY, light, slider, shiftSlider) {
+ 
     let width        = 23;
     let height       = 15;
     let separationPx = 10;
@@ -45,7 +46,7 @@
 
       for (let j = startY; j < (startY + totalHeight); j += iterSize) {
 
-        mists.push(new Droplet([i, j], velocity, light, slider))
+        mists.push(new Droplet([i, j], velocity, light, slider, shiftSlider))
 
       }
     }
@@ -78,6 +79,7 @@
     let maxIterations = 6.283;
     let interval = maxIterations / 6.0;
     let period = this.slider.getRatio() * maxIterations
+    let shift = this.shiftSlider.getRatio() * 400
 
     let maxF = () => 255;
     let minF = () => 0;
@@ -107,9 +109,9 @@
     let x = this.pos[0];
 
     let deltas = [
-      (t) => Math.cos(t * 3.14  / 200) * maxIterations * 10,
-      (t) => Math.sin(t * 3.14 / 200) * maxIterations * 20,
-      (t) => -Math.cos(t * 3.14 / 200) * maxIterations * 10
+      (t) => Math.cos((t + shift) * 3.14  / 200) * maxIterations * 10,
+      (t) => Math.sin((t + shift) * 3.14 / 200) * maxIterations * 20,
+      (t) => -Math.cos((t + shift) * 3.14 / 200) * maxIterations * 10
     ]
 
     let hues = hue(theta, deltas, x);
