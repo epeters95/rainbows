@@ -109,9 +109,9 @@
     let x = this.pos[0];
 
     let deltas = [
-      (t) => Math.cos((t + shift) * 3.14  / 200) * maxIterations * 10,
+      (t) => Math.cos((t + shift) * 3.14  / 200) * maxIterations * 30,
       (t) => Math.sin((t + shift) * 3.14 / 200) * maxIterations * 20,
-      (t) => -Math.cos((t + shift) * 3.14 / 200) * maxIterations * 10
+      (t) => -Math.cos((t + shift) * 3.14 / 200) * maxIterations * 30
     ]
 
     let hues = hue(theta, deltas, x);
