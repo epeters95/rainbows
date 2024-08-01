@@ -79,7 +79,8 @@
     let maxIterations = 6.283;
     let interval = maxIterations / 6.0;
     let period = this.slider.getRatio() * maxIterations
-    let shift = this.shiftSlider.getRatio() * 400
+    // let shift = this.shiftSlider.getRatio() * 400
+    let shift = this.light.pos[0] / 2
 
     let maxF = () => 255;
     let minF = () => 0;
@@ -107,11 +108,11 @@
 
     let theta = this.angleTo(this.light)
     let x = this.pos[0];
-
+    let shiftScale = this.shiftSlider.getRatio()
     let deltas = [
-      (t) => Math.cos((t + shift) * 3.14  / 200) * maxIterations * 30,
-      (t) => Math.sin((t + shift) * 3.14 / 200) * maxIterations * 20,
-      (t) => -Math.cos((t + shift) * 3.14 / 200) * maxIterations * 30
+      (t) => Math.cos((t + shift) * 3.14  / 200) * maxIterations * (10 + 20 * shiftScale),
+      (t) => Math.sin((t + shift) * 3.14 / 200) * maxIterations * (10 + 10 * shiftScale),
+      (t) => -Math.cos((t + shift) * 3.14 / 200) * maxIterations * (10 + 20 * shiftScale)
     ]
 
     let hues = hue(theta, deltas, x);
