@@ -11,7 +11,6 @@
   };
 
   var Droplet = Rainbows.Droplet = function(pos, vel, light, slider, shiftSlider) {
-    // var radius = 5 + Math.random() * 6;
     var radius = 10;
     Rainbows.MovingObject.call(this, pos, vel, radius,
        Droplet.COLOR);
@@ -78,7 +77,12 @@
     // Parametrized Hue function
     let maxIterations = 6.283;
     let interval = maxIterations / 6.0;
+    
+    // Period indicates the starting rotation at which the hue function beings
     let period = this.slider.getRatio() * maxIterations
+
+    // Shift will shift the end rgb components over sine and cosine functions
+    // E.g. 
     // let shift = this.shiftSlider.getRatio() * 400
     let shift = this.light.pos[0] / 2
 

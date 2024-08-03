@@ -10,7 +10,6 @@
   };
 
   var Light = Rainbows.Light = function(pos, vel, canvas) {
-    // var radius = 5 + Math.random() * 6;
     var radius = 10;
     Rainbows.MovingObject.call(this, pos, vel, radius,
        Light.COLOR);
