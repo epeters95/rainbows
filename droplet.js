@@ -84,7 +84,7 @@
     // Shift will shift the end rgb components over sine and cosine functions
     // E.g. 
     // let shift = this.shiftSlider.getRatio() * 400
-    let shift = this.light.pos[0] / 2
+    let shift = this.distanceTo(this.light) / 2
 
     let maxF = () => 255;
     let minF = () => 0;
