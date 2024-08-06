@@ -131,7 +131,7 @@
     this.ctx.beginPath();
     this.ctx.moveTo(x + widthL, y - 2);
     this.ctx.lineTo(x + widthL, y + height + 2);
-    this.ctx.strokeStyle = '#FFFFFF';
+    this.ctx.strokeStyle = 'yellow';
     this.ctx.stroke();
 
     //Right Side
