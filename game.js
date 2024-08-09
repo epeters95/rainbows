@@ -143,6 +143,18 @@
   Game.prototype.move = function() {
     for (var i = 0; i < this.droplets.length; i++) {
       this.droplets[i].move();
+      this.droplets[i].subDroplet.move();
+    }
+  }
+
+  const adjustDroplet = function(droplet) {
+    droplet.pos[0] = droplet.pos[0] % 900;
+    droplet.pos[1] = droplet.pos[1] % 900;
+    if (droplet.pos[0] < 0) {
+      droplet.pos[0] += 900;
+    }
+    if (droplet.pos[1] < 0) {
+      droplet.pos[1] += 500;
     }
   }
   
@@ -151,16 +163,10 @@
     this.move();
     this.draw();
 
+
     for (var i = 0; i < this.droplets.length; i++) {
-      var droplet = this.droplets[i];
-      droplet.pos[0] = droplet.pos[0] % 900;
-      droplet.pos[1] = droplet.pos[1] % 900;
-      if (droplet.pos[0] < 0) {
-        droplet.pos[0] += 900;
-      }
-      if (droplet.pos[1] < 0) {
-        droplet.pos[1] += 500;
-      }
+      adjustDroplet(this.droplets[i]);
+      adjustDroplet(this.droplets[i].subDroplet);
     }
   };
   

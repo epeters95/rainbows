@@ -10,16 +10,29 @@
     this.prototype = new Surrogate();
   };
 
-  var Droplet = Rainbows.Droplet = function(pos, vel, light, slider, shiftSlider) {
-    var radius = 10;
-    Rainbows.MovingObject.call(this, pos, vel, radius,
-       Droplet.COLOR);
+  var Droplet = Rainbows.Droplet = function(pos, vel, light, slider, shiftSlider, parent=true) {
+    
+    var radius = 5;
+
+    if (parent) {
+      this.subDroplet = setSubDroplet(pos, [3, 0], light, slider, shiftSlider);
+      radius = 10;
+    }
+
+    Rainbows.MovingObject.call(this, pos, vel, radius, Droplet.COLOR);
+    
     this.light = light;
     this.minAngle = 1000;
     this.maxAngle = 0;
     this.slider = slider;
     this.shiftSlider = shiftSlider;
+    this.parent = parent;
   };
+
+
+  const setSubDroplet = function(pos, vel, light, slider, shiftSlider) {
+    return new Droplet(pos, vel, light, slider, shiftSlider, false);
+  }
 
   
   Droplet.RADIUS = 10;
@@ -64,6 +77,9 @@
     );
     ctx.strokeStyle = this.color;
     ctx.stroke();
+    if (this.parent) {
+      this.subDroplet.draw(ctx)
+    }
   }
 
   Droplet.prototype.getColor = function() {
@@ -80,6 +96,8 @@
     
     // Period indicates the starting rotation at which the hue function beings
     let period = this.slider.getRatio() * maxIterations
+
+    let that = this;
 
     // Shift will shift the end rgb components over sine and cosine functions
     // E.g. 
@@ -107,7 +125,11 @@
         return null;
       }
       return fArray[i].map( (f, idx) => {
-        return Math.abs( Math.round(f(t)) - deltas[idx](x) );
+        let resultHue = Math.round(f(t))
+        if (that.parent) {
+          resultHue -= deltas[idx](x);
+        }
+        return Math.abs(resultHue);
       })
     }
 
