@@ -95,7 +95,7 @@
     let interval = maxIterations / 6.0;
     
     // Period indicates the starting rotation at which the hue function beings
-    let period = this.slider.getRatio() * maxIterations
+    let period = this.light.rotationValue * maxIterations
 
     let that = this;
 

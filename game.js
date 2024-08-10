@@ -26,6 +26,7 @@
 
     this.startTime;
     this.time = 0;
+    this.rotationValue = 0;
 
     const canvasPosition = {
       x: this.canvas.offsetLeft,
@@ -162,9 +163,9 @@
     
     this.move();
     this.draw();
+    this.light.rotate();
 
-
-    for (var i = 0; i < this.droplets.length; i++) {
+    for (let i = 0; i < this.droplets.length; i++) {
       adjustDroplet(this.droplets[i]);
       adjustDroplet(this.droplets[i].subDroplet);
     }

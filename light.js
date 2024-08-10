@@ -10,6 +10,9 @@
   };
 
   var Light = Rainbows.Light = function(pos, vel, canvas) {
+
+    this.rotationValue = 0;
+
     var radius = 10;
     Rainbows.MovingObject.call(this, pos, vel, radius,
        Light.COLOR);
@@ -49,12 +52,24 @@
     canvas.addEventListener('mouseup', dragOff)
     canvas.addEventListener('mouseexit', dragOff)
   };
+
   
   Light.RADIUS = 16;
   Light.COLOR = "#FFFFFF";
 
   Light.inherits(Rainbows.MovingObject);
 
+  Light.prototype.rotate = function() {
+
+    let rotationRate = 0.006;
+    let maxRotation = 1.0;
+
+    this.rotationValue += rotationRate;
+    
+    if (this.rotationValue > maxRotation) {
+      this.rotationValue -= maxRotation;
+    }
+  }
 
 
 
