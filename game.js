@@ -108,7 +108,7 @@
 
     this.light.draw(this.ctx);
 
-    this.drawSlider(this.slider, 10);
+    // this.drawSlider(this.slider, 10);
     this.drawSlider(this.shiftSlider, 850);
 
     

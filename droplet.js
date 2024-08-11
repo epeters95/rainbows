@@ -15,7 +15,7 @@
     var radius = 5;
 
     if (parent) {
-      this.subDroplet = setSubDroplet(pos, [3, 0], light, slider, shiftSlider);
+      this.subDroplet = setSubDroplet(pos, [2.5, 0], light, slider, shiftSlider);
       radius = 10;
     }
 
@@ -45,7 +45,7 @@
     let width        = 23;
     let height       = 15;
     let separationPx = 10;
-    let velocity     = [4, 0];
+    let velocity     = [3.5, 0];
 
     // 2D array of the moving droplets
     let mists = []
