@@ -46,7 +46,7 @@
       }
     })
 
-    let dragOff = (event) => {
+    let dragOff = () => {
       isDragging = false;
     }
     canvas.addEventListener('mouseup', dragOff)
