@@ -16,7 +16,7 @@
     
     this.light = new Light([450, 450], [0, 0], this.canvas)
     this.slider = new Slider(200, 10, 100, sliderLength)
-    this.shiftSlider = new Slider(200, 850, 10, sliderLength)
+    this.shiftSlider = new Slider(200, 850, 0, sliderLength)
 
     this.droplets = Droplet.mistArray(30, 180, this.light, this.slider, this.shiftSlider);
 
@@ -110,11 +110,6 @@
 
     // this.drawSlider(this.slider, 10);
     this.drawSlider(this.shiftSlider, 850);
-
-    
-    this.ctx.fillStyle = "grey";
-    this.ctx.font = "20px Comfortaa, sans-serif";
-    this.ctx.fillText("rotation", 95, 32);
   };
 
   Game.prototype.drawSlider = function(slider, y) {
