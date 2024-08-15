@@ -4,6 +4,8 @@
   var Light = Rainbows.Light;
   var Slider = Rainbows.Slider;
   const sliderLength = 500;
+  var canvasHeight = 900;
+  var canvasWidth = 1200;
   
   var Game = Rainbows.Game = function(canvas) {
     this.canvas = canvas;
@@ -93,8 +95,8 @@
     window.clearInterval(this.endID);
   };
  
-  Game.DIM_X = 900;
-  Game.DIM_Y = 500;
+  Game.DIM_X = canvasWidth;
+  Game.DIM_Y = canvasHeight;
   
   
   Game.prototype.draw = function() {
@@ -144,13 +146,13 @@
   }
 
   const adjustDroplet = function(droplet) {
-    droplet.pos[0] = droplet.pos[0] % 900;
-    droplet.pos[1] = droplet.pos[1] % 900;
+    droplet.pos[0] = droplet.pos[0] % canvasWidth;
+    droplet.pos[1] = droplet.pos[1] % canvasWidth;
     if (droplet.pos[0] < 0) {
-      droplet.pos[0] += 900;
+      droplet.pos[0] += canvasWidth;
     }
     if (droplet.pos[1] < 0) {
-      droplet.pos[1] += 500;
+      droplet.pos[1] += canvasWidth;
     }
   }
   
@@ -167,8 +169,8 @@
   };
   
   Game.prototype.isOutOfBounds = function(object) {
-    if ((object.pos[0] < 0 || object.pos[0] > 900) || 
-      (object.pos[1] < 0 || object.pos[1] > 900) ) {
+    if ((object.pos[0] < 0 || object.pos[0] > canvasWidth) || 
+      (object.pos[1] < 0 || object.pos[1] > canvasHeight) ) {
       return true;
     }
     return false
