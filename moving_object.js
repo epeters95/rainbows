@@ -1,7 +1,7 @@
 (function (root) {
   var Rainbows = root.Rainbows = (root.Rainbows || {});
   
-  var MovingObject = Rainbows.MovingObject = function(pos, vel, radius, color){
+  var MovingObject = Rainbows.MovingObject = function(pos, vel, radius, color='rgb(255,0,255)') {
     this.pos = pos;
     this.vel = vel;
     this.radius = radius;

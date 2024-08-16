@@ -19,7 +19,7 @@
       radius = 10;
     }
 
-    Rainbows.MovingObject.call(this, pos, vel, radius, Droplet.COLOR);
+    Rainbows.MovingObject.call(this, pos, vel, radius);
     
     this.light = light;
     this.minAngle = 1000;
@@ -84,11 +84,9 @@
 
   Droplet.prototype.getColor = function() {
 
-    let colVals = Droplet.COLOR.substring( Droplet.COLOR.indexOf('(') + 1,
-                                           Droplet.COLOR.indexOf(')') - 1);
-    let r = parseInt(colVals[0]);
-    let g = parseInt(colVals[1]);
-    let b = parseInt(colVals[2]);
+    let r = '255';
+    let g = '255';
+    let b = '0';
 
     // Parametrized Hue function
     let maxIterations = Math.PI * 2;
