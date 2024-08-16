@@ -5,10 +5,14 @@
   var Slider = Rainbows.Slider;
 
   const sliderLength = 500;
-  const canvasHeight = 900;
+  const sliderHeight = 30;
+  const canvasHeight = 600;
   const canvasWidth = 1200;
   const initialVel = 3.5;
-  const sliderStart = 200;
+
+  const centerX = Math.floor(canvasWidth / 2);
+  const centerY = Math.floor(canvasHeight / 2);
+  const sliderStart = centerX - Math.floor(sliderLength / 2);
   
   var Game = Rainbows.Game = function(canvas) {
     this.canvas = canvas;
@@ -17,12 +21,13 @@
   };
 
   Game.prototype.reset = function() {
-    
-    this.light = new Light([450, 450], [0, 0], this.canvas)
-    this.slider = new Slider(sliderStart, 10, 0, sliderLength)
-    this.shiftSlider = new Slider(sliderStart, 850, 0, sliderLength)
 
-    this.droplets = Droplet.mistArray(30, 180, this.light, this.slider, this.shiftSlider);
+    
+    this.light = new Light([centerX, centerY], [0, 0], this.canvas)
+    this.slider = new Slider(sliderStart, 0, 0, sliderLength)
+    this.shiftSlider = new Slider(sliderStart, canvasHeight - sliderHeight, 0, sliderLength)
+
+    this.droplets = Droplet.mistArray(30, 20, this.light, this.slider, this.shiftSlider);
 
 
     this.titleFade = 1;
@@ -106,42 +111,40 @@
     this.ctx.fillStyle = "black";
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-    for (var i = 0; i < this.droplets.length; i++) {
+    for (let i = 0; i < this.droplets.length; i++) {
       this.droplets[i].draw(this.ctx);
     }
 
     this.light.draw(this.ctx);
 
-    this.drawSlider(this.slider, 10);
-    this.drawSlider(this.shiftSlider, 850);
+    this.drawSlider(this.slider);
+    this.drawSlider(this.shiftSlider);
   };
 
-  Game.prototype.drawSlider = function(slider, y) {
-    var x = sliderStart;
-    var height = 30;
+  Game.prototype.drawSlider = function(slider) {
 
-    var widthL = slider.leftWidth;
-    var widthR = sliderLength - widthL;
+    let widthL = slider.leftWidth;
+    let widthR = sliderLength - widthL;
     //Left side
     this.ctx.beginPath();
     this.ctx.fillStyle = 'grey';
-    this.ctx.fillRect(x, y, widthL, height);
+    this.ctx.fillRect(slider.x, slider.y, widthL, sliderHeight);
 
     //Slider
     this.ctx.beginPath();
-    this.ctx.moveTo(x + widthL, y - 2);
-    this.ctx.lineTo(x + widthL, y + height + 2);
+    this.ctx.moveTo(slider.x + widthL, slider.y - 2);
+    this.ctx.lineTo(slider.x + widthL, slider.y + sliderHeight + 2);
     this.ctx.strokeStyle = 'yellow';
     this.ctx.stroke();
 
     //Right Side
     this.ctx.beginPath();
     this.ctx.fillStyle = 'grey';
-    this.ctx.fillRect(x + widthL + 1, y, widthR, height);
+    this.ctx.fillRect(slider.x + widthL + 1, slider.y, widthR, sliderHeight);
   }
 
   Game.prototype.move = function() {
-    for (var i = 0; i < this.droplets.length; i++) {
+    for (let i = 0; i < this.droplets.length; i++) {
       this.droplets[i].move();
       this.droplets[i].subDroplet.move();
     }
@@ -149,12 +152,12 @@
 
   const adjustDroplet = function(droplet, that=null) {
     droplet.pos[0] = droplet.pos[0] % canvasWidth;
-    droplet.pos[1] = droplet.pos[1] % canvasWidth;
+    droplet.pos[1] = droplet.pos[1] % canvasHeight;
     if (droplet.pos[0] < 0) {
       droplet.pos[0] += canvasWidth;
     }
     if (droplet.pos[1] < 0) {
-      droplet.pos[1] += canvasWidth;
+      droplet.pos[1] += canvasHeight;
     }
 
     // Rotate trajection of all droplets by slider value
