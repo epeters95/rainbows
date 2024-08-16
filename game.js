@@ -5,7 +5,7 @@
   var Slider = Rainbows.Slider;
 
   const sliderLength = 500;
-  const sliderHeight = 30;
+  const sliderHeight = 20;
   const canvasHeight = 600;
   const canvasWidth = 1200;
   const initialVel = 3.5;
@@ -42,62 +42,56 @@
       y: this.canvas.offsetTop
     };
 
-    this.held = false;
-    this.heldShift = false;
+    const addSliderEventsFor = function(that, slidersArray) {
+      that.canvas.addEventListener('mousedown', function(e) {
 
+        // mouse position relative to the browser window
+        const mouse = { 
+            x: e.pageX - canvasPosition.x,
+            y: e.pageY - canvasPosition.y
+        }
+    
+
+        const between = (a, b, c) => { return (a >= b && a <= c) };
+
+        slidersArray.forEach( function(slider) {
+          let x = slider.getPlace();
+          if (!slider.held
+              && between(mouse.x, x - 5, x + 5)
+              && between(mouse.y, slider.y, slider.y + sliderHeight)
+          ) {
+            slider.hodl();
+          }
+        })
+      });
+
+      that.canvas.addEventListener('mouseup', function(e) {
+        slidersArray.forEach( function(slider) {
+          slider.letgo();
+        });
+      });
+
+      that.canvas.addEventListener('mousemove', function(e) {
+        slidersArray.forEach( function(slider) {
+          if (slider.held) {
+            const mouse = {
+              x: e.pageX - canvasPosition.x,
+              y: e.pageY - canvasPosition.y
+            }
+            slider.leftWidth = mouse.x - slider.x;
+
+            if (slider.x > sliderStart + sliderLength) {
+              slider.x = sliderStart + sliderLength;
+            }
+          }
+        });
+      });
+    }
+
+    
     let that = this;
-    this.canvas.addEventListener('mousedown', function(e) {
+    addSliderEventsFor(that, [this.slider, this.shiftSlider])
 
-      // mouse position relative to the browser window
-      const mouse = { 
-          x: e.pageX - canvasPosition.x,
-          y: e.pageY - canvasPosition.y
-      }
-      
-      let x = that.slider.getPlace();
-
-      const between = (a, b, c) => { return (a >= b && a <= c) };
-
-      if (!that.held && between(mouse.x, x - 5, x + 5) && between(mouse.y, that.slider.y, that.slider.y + 30)) {
-        that.held = true;
-      }
-
-      x = that.shiftSlider.getPlace();
-
-      if (!that.heldShift && between(mouse.x, x - 5, x + 5) && between(mouse.y, that.shiftSlider.y, that.shiftSlider.y + 30)) {
-        that.heldShift = true;
-      }
-    });
-
-    this.canvas.addEventListener('mouseup', function(e) {
-      that.held = false;
-      that.heldShift = false;
-    });
-
-    this.canvas.addEventListener('mousemove', function(e) {
-      if (that.held) {
-        const mouse = {
-          x: e.pageX - canvasPosition.x,
-          y: e.pageY - canvasPosition.y
-        }
-        that.slider.leftWidth = mouse.x - that.slider.x;
-
-        if (that.slider.x > sliderStart + sliderLength) {
-          that.slider.x = sliderStart + sliderLength;
-        }
-      }
-      if (that.heldShift) {
-        const mouse = {
-          x: e.pageX - canvasPosition.x,
-          y: e.pageY - canvasPosition.y
-        }
-        that.shiftSlider.leftWidth = mouse.x - that.shiftSlider.x;
-
-        if (that.shiftSlider.x > sliderStart + sliderLength) {
-          that.shiftSlider.x = sliderStart + sliderLength;
-        }
-      }
-    });
 
     window.clearInterval(this.endID);
   };
@@ -161,7 +155,7 @@
     }
 
     // Rotate trajection of all droplets by slider value
-    if (that && that.held) {
+    if (that && that.slider.held) {
       let angle = that.slider.getRatio() * Math.PI * 2;
       let compX = Math.cos(angle) * initialVel;
       let compY = Math.sin(angle) * initialVel;

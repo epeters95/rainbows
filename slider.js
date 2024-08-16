@@ -6,6 +6,7 @@
     this.y = y;
     this.leftWidth = leftWidth;
     this.length = length;
+    this.held = false;
   }
 
   Slider.prototype.getPlace = function() {
@@ -14,6 +15,14 @@
 
   Slider.prototype.getRatio = function() {
     return this.leftWidth / (this.length);
+  }
+
+  Slider.prototype.hodl = function() {
+    this.held = true;
+  }
+
+  Slider.prototype.letgo = function() {
+    this.held = false;
   }
 
 }(this));
