@@ -13,7 +13,6 @@
   var Game = Rainbows.Game = function(canvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
-    this.best = 100000;
     this.reset();
   };
 
@@ -118,7 +117,7 @@
   };
 
   Game.prototype.drawSlider = function(slider, y) {
-    var x = 200;
+    var x = sliderStart;
     var height = 30;
 
     var widthL = slider.leftWidth;
