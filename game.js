@@ -6,6 +6,7 @@
   const sliderLength = 500;
   var canvasHeight = 900;
   var canvasWidth = 1200;
+  var initialVel = 3.5;
   
   var Game = Rainbows.Game = function(canvas) {
     this.canvas = canvas;
@@ -17,7 +18,7 @@
   Game.prototype.reset = function() {
     
     this.light = new Light([450, 450], [0, 0], this.canvas)
-    this.slider = new Slider(200, 10, 100, sliderLength)
+    this.slider = new Slider(200, 10, 0, sliderLength)
     this.shiftSlider = new Slider(200, 850, 0, sliderLength)
 
     this.droplets = Droplet.mistArray(30, 180, this.light, this.slider, this.shiftSlider);
@@ -110,7 +111,7 @@
 
     this.light.draw(this.ctx);
 
-    // this.drawSlider(this.slider, 10);
+    this.drawSlider(this.slider, 10);
     this.drawSlider(this.shiftSlider, 850);
   };
 
@@ -145,7 +146,7 @@
     }
   }
 
-  const adjustDroplet = function(droplet) {
+  const adjustDroplet = function(droplet, that=null) {
     droplet.pos[0] = droplet.pos[0] % canvasWidth;
     droplet.pos[1] = droplet.pos[1] % canvasWidth;
     if (droplet.pos[0] < 0) {
@@ -153,6 +154,15 @@
     }
     if (droplet.pos[1] < 0) {
       droplet.pos[1] += canvasWidth;
+    }
+
+    // Rotate trajection of all droplets by slider value
+    if (that && that.held) {
+      let angle = that.slider.getRatio() * 6.283;
+      let compX = Math.cos(angle) * initialVel;
+      let compY = Math.sin(angle) * initialVel;
+      
+      droplet.setVelocity([compX, compY])
     }
   }
   
@@ -163,7 +173,7 @@
     this.light.rotate();
 
     for (let i = 0; i < this.droplets.length; i++) {
-      adjustDroplet(this.droplets[i]);
+      adjustDroplet(this.droplets[i], this);
       adjustDroplet(this.droplets[i].subDroplet);
     }
   };

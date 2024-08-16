@@ -44,6 +44,12 @@
     return angle;
   }
 
+  MovingObject.prototype.setVelocity = function(newVel) {
+    if (newVel && newVel.length === 2) {
+      this.vel = newVel
+    }
+  }
+
   Math.atanBetter = function(y, x) {
     var value = 0;
     if (y >= 0 && x === 0) {

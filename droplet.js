@@ -42,7 +42,7 @@
   
   Droplet.mistArray = function(startX, startY, light, slider, shiftSlider) {
  
-    let width        = 23;
+    let width        = 30;
     let height       = 15;
     let separationPx = 10;
     let velocity     = [3.5, 0];
