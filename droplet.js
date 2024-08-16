@@ -91,7 +91,8 @@
     let b = parseInt(colVals[2]);
 
     // Parametrized Hue function
-    let maxIterations = 6.283;
+    let maxIterations = Math.PI * 2;
+    let maxHue = 255;
     let interval = maxIterations / 6.0;
     
     // Period indicates the starting rotation at which the hue function beings
@@ -105,10 +106,10 @@
     // let shift = this.light.pos[0] / 2
     let shift = this.distanceTo(this.light) / 2
 
-    let maxF = () => 255;
+    let maxF = () => maxHue;
     let minF = () => 0;
-    let incF = (t) => (255 / interval) * ((t + period) % interval);
-    let decF = (t) => (255 / interval) * (interval - ((t + period) % interval));
+    let incF = (t) => (maxHue / interval) * ((t + period) % interval);
+    let decF = (t) => (maxHue / interval) * (interval - ((t + period) % interval));
 
     let fArray = [
       [ maxF, incF, minF ],
@@ -137,9 +138,9 @@
     let x = this.pos[0];
     let shiftScale = this.shiftSlider.getRatio()
     let deltas = [
-      (t) => Math.cos((t + shift) * 3.14  / 200) * maxIterations * (10 + 20 * shiftScale),
-      (t) => Math.sin((t + shift) * 3.14 / 200) * maxIterations * (10 + 10 * shiftScale),
-      (t) => -Math.cos((t + shift) * 3.14 / 200) * maxIterations * (10 + 20 * shiftScale)
+      (t) => Math.cos((t + shift) * Math.PI  / 200) * maxIterations * (10 + 20 * shiftScale),
+      (t) => Math.sin((t + shift) * Math.PI / 200) * maxIterations * (10 + 10 * shiftScale),
+      (t) => -Math.cos((t + shift) * Math.PI / 200) * maxIterations * (10 + 20 * shiftScale)
     ]
 
     let hues = hue(theta, deltas, x);

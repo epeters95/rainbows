@@ -3,10 +3,12 @@
   var Droplet = Rainbows.Droplet;
   var Light = Rainbows.Light;
   var Slider = Rainbows.Slider;
+
   const sliderLength = 500;
-  var canvasHeight = 900;
-  var canvasWidth = 1200;
-  var initialVel = 3.5;
+  const canvasHeight = 900;
+  const canvasWidth = 1200;
+  const initialVel = 3.5;
+  const sliderStart = 200;
   
   var Game = Rainbows.Game = function(canvas) {
     this.canvas = canvas;
@@ -18,8 +20,8 @@
   Game.prototype.reset = function() {
     
     this.light = new Light([450, 450], [0, 0], this.canvas)
-    this.slider = new Slider(200, 10, 0, sliderLength)
-    this.shiftSlider = new Slider(200, 850, 0, sliderLength)
+    this.slider = new Slider(sliderStart, 10, 0, sliderLength)
+    this.shiftSlider = new Slider(sliderStart, 850, 0, sliderLength)
 
     this.droplets = Droplet.mistArray(30, 180, this.light, this.slider, this.shiftSlider);
 
@@ -76,8 +78,8 @@
         }
         that.slider.leftWidth = mouse.x - that.slider.x;
 
-        if (that.slider.x > 200 + sliderLength) {
-          that.slider.x = 200 + sliderLength;
+        if (that.slider.x > sliderStart + sliderLength) {
+          that.slider.x = sliderStart + sliderLength;
         }
       }
       if (that.heldShift) {
@@ -87,8 +89,8 @@
         }
         that.shiftSlider.leftWidth = mouse.x - that.shiftSlider.x;
 
-        if (that.shiftSlider.x > 200 + sliderLength) {
-          that.shiftSlider.x = 200 + sliderLength;
+        if (that.shiftSlider.x > sliderStart + sliderLength) {
+          that.shiftSlider.x = sliderStart + sliderLength;
         }
       }
     });
@@ -158,7 +160,7 @@
 
     // Rotate trajection of all droplets by slider value
     if (that && that.held) {
-      let angle = that.slider.getRatio() * 6.283;
+      let angle = that.slider.getRatio() * Math.PI * 2;
       let compX = Math.cos(angle) * initialVel;
       let compY = Math.sin(angle) * initialVel;
       
