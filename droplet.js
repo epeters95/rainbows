@@ -2,6 +2,9 @@
   var Rainbows = root.Rainbows = (root.Rainbows || {});
   var Light = Rainbows.Light;
 
+  const subDropletVelocity = 2.5;
+  const dropletVelocity    = 3.5
+
   Function.prototype.inherits = function(SuperClass) {
     function Surrogate() {}
     Surrogate.prototype = SuperClass.prototype;
@@ -13,7 +16,7 @@
     var radius = 5;
 
     if (parent) {
-      this.subDroplet = setSubDroplet(pos, [2.5, 0], light, slider, shiftSlider);
+      this.subDroplet = setSubDroplet(pos, [subDropletVelocity, 0], light, slider, shiftSlider);
       radius = 10;
     }
 
@@ -43,7 +46,7 @@
     let width        = 30;
     let height       = 15;
     let separationPx = 10;
-    let velocity     = [3.5, 0];
+    let velocity     = [dropletVelocity, 0];
 
     // 2D array of the moving droplets
     let mists = []
