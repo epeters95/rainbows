@@ -6,8 +6,8 @@ The hue function can be manipulated in various ways using the UI and sliders:
 
 - Drag the center point to see the rainbow wrap around it
 
-- The top slider rotates the rainbow around the center point
+- The top slider rotates the trajectory of the foreground droplets
 
-- The bottom slider changes the intensity of hue shift
+- The second top slider changes the scale of droplets
 
-- Hue shift increases in scale as the center point is dragged right
+- The bottom slider changes the amount of hue shift on the foreground droplets
