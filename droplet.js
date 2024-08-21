@@ -17,7 +17,7 @@
 
     if (parent) {
       this.subDroplet = setSubDroplet(pos, [subDropletVelocity, 0], light, slider, shiftSlider);
-      radius = 10;
+      radius = 15;
     }
 
     Rainbows.MovingObject.call(this, pos, vel, radius);
@@ -36,7 +36,7 @@
   }
 
   
-  Droplet.RADIUS = 10;
+  Droplet.RADIUS = 15;
   Droplet.COLOR = "rgb(136, 180, 255)";
 
   Droplet.inherits(Rainbows.MovingObject);
@@ -45,7 +45,7 @@
  
     let width        = 30;
     let height       = 15;
-    let separationPx = 10;
+    let separationPx = 5;
     let velocity     = [dropletVelocity, 0];
 
     // 2D array of the moving droplets

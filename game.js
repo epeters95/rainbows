@@ -9,7 +9,7 @@
   const canvasHeight = 600;
   const canvasWidth = 1200;
   const initialVel = 3.5;
-  const initialSizeSlider = 80;
+  const initialSizeSlider = 150;
 
   const centerX = Math.floor(canvasWidth / 2);
   const centerY = Math.floor(canvasHeight / 2);
