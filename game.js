@@ -98,13 +98,9 @@
 
     window.clearInterval(this.endID);
   };
- 
-  Game.DIM_X = canvasWidth;
-  Game.DIM_Y = canvasHeight;
-  
   
   Game.prototype.draw = function() {
-    this.ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+    this.ctx.clearRect(0, 0, canvasWidth, canvasHeight);
     this.ctx.fillStyle = "black";
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
