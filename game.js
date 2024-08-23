@@ -192,7 +192,7 @@
   };
 
   Game.prototype.start = function() {
-    this.windowID = window.setInterval(this.step.bind(this), 25);
+    this.windowID = window.setInterval(this.step.bind(this), 20);
   };
   
 }(this));
