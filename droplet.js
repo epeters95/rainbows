@@ -2,8 +2,9 @@
   var Rainbows = root.Rainbows = (root.Rainbows || {});
   var Light = Rainbows.Light;
 
-  const subDropletVelocity = 2.5;
-  const dropletVelocity    = 3.5
+  const subDropletVelocity   = 3.5;
+  const dropletVelocity      = 2.5;
+  const superDropletVelocity = 1.5;
 
   Function.prototype.inherits = function(SuperClass) {
     function Surrogate() {}
@@ -11,13 +12,16 @@
     this.prototype = new Surrogate();
   };
 
-  var Droplet = Rainbows.Droplet = function(pos, vel, light, slider, shiftSlider, parent=true) {
+  var Droplet = Rainbows.Droplet = function(pos, vel, light, slider, shiftSlider, parent=true, isSuper=false) {
     
     var radius = 5;
 
     if (parent) {
       this.subDroplet = setSubDroplet(pos, [subDropletVelocity, 0], light, slider, shiftSlider);
+      this.superDroplet = setSubDroplet(pos, [superDropletVelocity, 0], light, slider, shiftSlider, true)
       radius = 15;
+    } else if (isSuper) {
+      radius = 30;
     }
 
     Rainbows.MovingObject.call(this, pos, vel, radius);
@@ -28,11 +32,12 @@
     this.slider = slider;
     this.shiftSlider = shiftSlider;
     this.parent = parent;
+    this.super = isSuper;
   };
 
 
-  const setSubDroplet = function(pos, vel, light, slider, shiftSlider) {
-    return new Droplet(pos, vel, light, slider, shiftSlider, false);
+  const setSubDroplet = function(pos, vel, light, slider, shiftSlider, isSuper=false) {
+    return new Droplet(pos, vel, light, slider, shiftSlider, false, isSuper);
   }
 
   
@@ -80,6 +85,7 @@
     ctx.stroke();
     if (this.parent) {
       this.subDroplet.draw(ctx)
+      this.superDroplet.draw(ctx)
     }
   }
 
@@ -123,8 +129,14 @@
       }
       return fArray[i].map( (f, idx) => {
         let resultHue = Math.round(f(t))
+
         if (that.parent) {
+
           resultHue -= deltas[idx](x);
+
+        } else if (that.super) {
+
+          resultHue += deltas[idx](x);
         }
         return Math.abs(resultHue);
       })
