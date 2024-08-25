@@ -2,9 +2,9 @@
   var Rainbows = root.Rainbows = (root.Rainbows || {});
   var Light = Rainbows.Light;
 
-  const subDropletVelocity   = 3.5;
-  const dropletVelocity      = 2.5;
-  const superDropletVelocity = 1.5;
+  const subDropletVelocity   = 1.5;
+  const dropletVelocity      = 2.2;
+  const superDropletVelocity = 2.9;
 
   Function.prototype.inherits = function(SuperClass) {
     function Surrogate() {}
@@ -21,7 +21,7 @@
       this.superDroplet = setSubDroplet(pos, [superDropletVelocity, 0], light, slider, shiftSlider, true)
       radius = 15;
     } else if (isSuper) {
-      radius = 30;
+      radius = 28;
     }
 
     Rainbows.MovingObject.call(this, pos, vel, radius);

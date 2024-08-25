@@ -61,7 +61,7 @@
 
   Light.prototype.rotate = function() {
 
-    let rotationRate = 0.006;
+    let rotationRate = 0.004;
     let maxRotation = 1.0;
 
     this.rotationValue += rotationRate;

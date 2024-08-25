@@ -142,6 +142,7 @@
     for (let i = 0; i < this.droplets.length; i++) {
       this.droplets[i].move();
       this.droplets[i].subDroplet.move();
+      this.droplets[i].superDroplet.move();
     }
   }
 
@@ -180,6 +181,7 @@
     for (let i = 0; i < this.droplets.length; i++) {
       adjustDroplet(this.droplets[i], this);
       adjustDroplet(this.droplets[i].subDroplet);
+      adjustDroplet(this.droplets[i].superDroplet);
     }
   };
   
