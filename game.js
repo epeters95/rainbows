@@ -69,7 +69,7 @@
         })
       });
 
-      that.canvas.addEventListener('mouseup', function(e) {
+      that.canvas.addEventListener('mouseup', function() {
         slidersArray.forEach( function(slider) {
           slider.letgo();
         });
