@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <script src="./moving_object.js"></script>
+    <script src="./light.js"></script>
+    <script src="./droplet.js"></script>
+    <script src="./slider.js"></script>
+    <script src="./game.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet' type='text/css'>
+  </head>
+  <body class="rainbows" style="background-color: rgb(13, 35, 87);">
+    <center>
+      <br><br><br>
+      <canvas width="1200" height="600" ></canvas>
+      <script>
+          var canvas = document.getElementsByTagName("canvas")[0];
+          new Rainbows.Game(canvas).start();
+      </script>
+    </center>
+    <br>
+    <div style="position: relative; margin: auto; width: 80%;">
+    <span style="color: white">
+      <p><b>rainbows</b></p>
+      <p>Javascript demo of a parametric hue function that can map any float to the RGB components of its hue value as if it were a point on a rainbow spanning a given range. This means the rainbow can be programmed by a rotation, distance between points, x or y value on the canvas, or any given function.</p>
+
+      <p>
+        Currently, the hue function is manipulated in various ways using the UI and sliders:
+        <br>
+        <ul>
+            <li>Drag the center point to see the rainbow wrap around it</li>
+
+            <li>The top slider rotates the trajectory of the foreground droplets</li>
+
+            <li>The second top slider changes the scale of droplets</li>
+
+            <li>The bottom slider changes the amount of hue shift on the foreground droplets</li>
+        </ul>
+      </p>
+    </span>
+  </div>
+  </body>
+</html>
