@@ -96,6 +96,7 @@
     let b = '0';
 
     // Parametrized Hue function
+    // let maxIterations = Math.PI * 12; //800;
     let maxIterations = Math.PI * 2;
     let maxHue = 255;
     let interval = maxIterations / 6.0;
@@ -144,11 +145,15 @@
 
     let theta = this.angleTo(this.light)
     let x = this.pos[0];
+    let y = this.pos[1];
     let shiftScale = this.shiftSlider.getRatio()
     let deltas = [
       (t) => Math.cos((t + shift) * Math.PI  / 200) * maxIterations * (10 + 20 * shiftScale),
       (t) => Math.sin((t + shift) * Math.PI / 200) * maxIterations * (10 + 10 * shiftScale),
       (t) => -Math.cos((t + shift) * Math.PI / 200) * maxIterations * (10 + 20 * shiftScale)
+      // (t) => Math.cos((t + shift)  / 10) * maxIterations * (10 - 20 * shiftScale),
+      // (t) => Math.sin((t + shift) / 10) * maxIterations * (10 - 10 * shiftScale),
+      // (t) => -Math.cos((t + shift) / 10) * maxIterations * (10 - 20 * shiftScale)
     ]
 
     let hues = hue(theta, deltas, x);
