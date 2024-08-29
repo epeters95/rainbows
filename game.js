@@ -216,25 +216,6 @@
       adjustDroplet(this.droplets[i].subDroplet);
       adjustDroplet(this.droplets[i].superDroplet);
     }
-    if (this.isOutOfBounds(this.light)) {
-      this.light.pos[0] = this.light.pos[0] % canvasWidth
-      this.light.pos[1] = this.light.pos[1] % canvasHeight
-      
-      if (this.light.pos[0] < 0) {
-        this.light.pos[0] += canvasWidth;
-      }
-      if (this.light.pos[1] < 0) {
-        this.light.pos[1] += canvasHeight;
-      }
-    }
-  };
-  
-  Game.prototype.isOutOfBounds = function(object) {
-    if ((object.pos[0] < 0 || object.pos[0] > canvasWidth) || 
-      (object.pos[1] < 0 || object.pos[1] > canvasHeight) ) {
-      return true;
-    }
-    return false
   };
 
   Game.prototype.start = function() {
