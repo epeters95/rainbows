@@ -96,8 +96,8 @@
     let b = '0';
 
     // Parametrized Hue function
-    // let maxIterations = Math.PI * 12; //800;
-    let maxIterations = Math.PI * 2;
+    let maxIterations = Math.PI * 12; //800;
+    // let maxIterations = Math.PI * 2;
     let maxHue = 255;
     let interval = maxIterations / 6.0;
     
@@ -133,13 +133,13 @@
 
         if (that.parent) {
 
-          resultHue -= deltas[idx](x);
+          resultHue -= deltas[idx](x) / 2//(t * 1);
 
         } else if (that.super) {
 
-          resultHue += deltas[idx](x);
+          resultHue += deltas[idx](x) / 2//(t * 1);
         }
-        return Math.abs(resultHue);
+        return resultHue;
       })
     }
 
@@ -156,7 +156,19 @@
       // (t) => -Math.cos((t + shift) / 10) * maxIterations * (10 - 20 * shiftScale)
     ]
 
-    let hues = hue(theta, deltas, x);
+    let hues = hue(theta * x * 8 / y, deltas, x);
+    let maxOverflow = 555;
+    let overflow = 0;
+    
+    let getOverflow = (h) => Math.max(h - maxHue, 0);
+    // let getOverflow = (h) => {
+    //   if (h < 0) {
+    //     return (h * -1) / maxOverflow;
+    //   } else {
+    //     return 0;//Math.max(h - maxHue, 0) / maxOverflow;
+    //   }
+    // }
+
 
     if (hues) {
 
@@ -164,9 +176,10 @@
       g = hues[1]
       b = hues[2]
 
+      overflow = getOverflow(r) + getOverflow(g) + getOverflow(b) 
     }
 
-    let color = 'rgb(' + r + ',' + g + ',' + b + ')';
+    let color = 'rgba(' + Math.abs(r) + ',' + Math.abs(g) + ',' + Math.abs(b) + ',' + (1 - (overflow / maxOverflow )) + ')';
     return color;
   }
 
