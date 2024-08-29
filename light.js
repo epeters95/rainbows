@@ -22,8 +22,10 @@
     this.offsetY = 0;
     let that = this;
     
+
     // Click events
-    canvas.addEventListener('mousedown', (event) => {
+    
+    const mouseDownCallback = (event) => {
       const mouseX = event.clientX - canvas.getBoundingClientRect().left;
       const mouseY = event.clientY - canvas.getBoundingClientRect().top;
 
@@ -35,22 +37,29 @@
         this.offsetX = that.pos[0]- mouseX;
         this.offsetY = that.pos[1] - mouseY;
       }
-    });
+    }
+    canvas.addEventListener('mousedown', mouseDownCallback);
+    canvas.addEventListener('touchstart', mouseDownCallback);
 
-    canvas.addEventListener('mousemove', (event) => {
+
+    const mouseMoveCallback = (event) => {
       if (isDragging) {
         const mouseX = event.clientX - canvas.getBoundingClientRect().left;
         const mouseY = event.clientY - canvas.getBoundingClientRect().top;
 
         this.pos = [mouseX + this.offsetX, mouseY + this.offsetY];
       }
-    })
+    }
+    canvas.addEventListener('mousemove', mouseMoveCallback)
+    canvas.addEventListener('touchmove', mouseMoveCallback)
 
     let dragOff = () => {
       isDragging = false;
     }
     canvas.addEventListener('mouseup', dragOff)
     canvas.addEventListener('mouseexit', dragOff)
+    canvas.addEventListener('touchend', dragOff)
+    canvas.addEventListener('touchcancel', dragOff)
   };
 
   

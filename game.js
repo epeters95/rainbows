@@ -46,15 +46,18 @@
       y: this.canvas.offsetTop
     };
 
-    const addSliderEventsFor = function(that, slidersArray) {
-      that.canvas.addEventListener('mousedown', function(e) {
 
+    const addSliderEventsFor = function(that, slidersArray) {
+
+      // Mouse down / Touch start
+
+      const mouseDownCallback = (e) => {
+        
         // mouse position relative to the browser window
         const mouse = { 
             x: e.pageX - canvasPosition.x,
             y: e.pageY - canvasPosition.y
         }
-    
 
         const between = (a, b, c) => { return (a >= b && a <= c) };
 
@@ -67,15 +70,25 @@
             slider.hodl();
           }
         })
-      });
+      }
+      that.canvas.addEventListener('mousedown', mouseDownCallback);
+      that.canvas.addEventListener('touchstart', mouseDownCallback);
 
-      that.canvas.addEventListener('mouseup', function() {
+      
+      // Mouse Up / Touch end
+
+      const mouseUpCallback = () => {
         slidersArray.forEach( function(slider) {
           slider.letgo();
         });
-      });
+      }
+      that.canvas.addEventListener('mouseup', mouseUpCallback);
+      that.canvas.addEventListener('touchend', mouseUpCallback);
 
-      that.canvas.addEventListener('mousemove', function(e) {
+
+      // Mouse Move / Touch move
+
+      const mouseMoveCallback = (e) => {
         slidersArray.forEach( function(slider) {
           if (slider.held) {
             const mouse = {
@@ -89,7 +102,9 @@
             }
           }
         });
-      });
+      }
+      that.canvas.addEventListener('mousemove', mouseMoveCallback);
+      that.canvas.addEventListener('touchmove', mouseMoveCallback);
     }
 
     
