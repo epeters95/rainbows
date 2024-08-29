@@ -24,7 +24,7 @@
   Game.prototype.reset = function() {
 
     
-    this.light = new Light([centerX, centerY], [0, 0], this.canvas)
+    this.light = new Light([centerX, centerY], [8, 3], this.canvas)
     this.slider = new Slider(sliderStart, 0, 0, sliderLength)
     this.shiftSlider = new Slider(sliderStart, canvasHeight - sliderHeight, 0, sliderLength)
     this.sizeSlider = new Slider(sliderStart, sliderHeight + 10, initialSizeSlider, sliderLength)
@@ -159,6 +159,7 @@
       this.droplets[i].subDroplet.move();
       this.droplets[i].superDroplet.move();
     }
+    this.light.move()
   }
 
   const adjustDroplet = function(droplet, that=null) {
@@ -193,10 +194,38 @@
     this.draw();
     this.light.rotate();
 
+    if (this.light.pos[0] < 0) {
+      this.light.pos[0] = 0;
+      this.light.vel = [-1 * this.light.vel[0], this.light.vel[1]]
+    }
+    if (this.light.pos[1] < 0) {
+      this.light.pos[1] = 0;
+      this.light.vel = [this.light.vel[0],-1 * this.light.vel[1]]
+    }
+    if (this.light.pos[0] > canvasWidth) {
+      this.light.pos[0] = canvasWidth;
+      this.light.vel = [-1 * this.light.vel[0], this.light.vel[1]]
+    }
+    if (this.light.pos[1] > canvasHeight) {
+      this.light.pos[1] = canvasHeight;
+      this.light.vel = [this.light.vel[0],-1 * this.light.vel[1]]
+    }
+
     for (let i = 0; i < this.droplets.length; i++) {
       adjustDroplet(this.droplets[i], this);
       adjustDroplet(this.droplets[i].subDroplet);
       adjustDroplet(this.droplets[i].superDroplet);
+    }
+    if (this.isOutOfBounds(this.light)) {
+      this.light.pos[0] = this.light.pos[0] % canvasWidth
+      this.light.pos[1] = this.light.pos[1] % canvasHeight
+      
+      if (this.light.pos[0] < 0) {
+        this.light.pos[0] += canvasWidth;
+      }
+      if (this.light.pos[1] < 0) {
+        this.light.pos[1] += canvasHeight;
+      }
     }
   };
   
@@ -209,7 +238,7 @@
   };
 
   Game.prototype.start = function() {
-    this.windowID = window.setInterval(this.step.bind(this), 20);
+    this.windowID = window.setInterval(this.step.bind(this), 30);
   };
   
 }(this));
