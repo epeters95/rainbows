@@ -9,7 +9,7 @@
   const canvasHeight = 600;
   const canvasWidth = 1200;
   const initialVel = 3.5;
-  const initialSizeSlider = 150;
+  const initialSizeSlider = 124;
 
   const centerX = Math.floor(canvasWidth / 2);
   const centerY = Math.floor(canvasHeight / 2);
@@ -25,8 +25,8 @@
 
     
     this.light = new Light([centerX, centerY], [8, 3], this.canvas)
-    this.slider = new Slider(sliderStart, 0, 0, sliderLength)
-    this.shiftSlider = new Slider(sliderStart, canvasHeight - sliderHeight, 0, sliderLength)
+    this.slider = new Slider(sliderStart, 0, 97, sliderLength)
+    this.shiftSlider = new Slider(sliderStart, canvasHeight - sliderHeight, 816, sliderLength)
     this.sizeSlider = new Slider(sliderStart, sliderHeight + 10, initialSizeSlider, sliderLength)
 
     this.sliders = [this.slider, this.shiftSlider, this.sizeSlider];
