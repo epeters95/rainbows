@@ -71,8 +71,16 @@
           }
         })
       }
+
       that.canvas.addEventListener('mousedown', mouseDownCallback);
-      that.canvas.addEventListener('touchstart', mouseDownCallback);
+      that.canvas.addEventListener('touchstart', (e) => {
+
+        that.canvas.dispatchEvent(new MouseEvent('mousedown', {
+          clientX: e.touches[0].clientX,
+          clientY: e.touches[0].clientY
+        }));
+
+      });
 
       
       // Mouse Up / Touch end
@@ -104,7 +112,14 @@
         });
       }
       that.canvas.addEventListener('mousemove', mouseMoveCallback);
-      that.canvas.addEventListener('touchmove', mouseMoveCallback);
+      that.canvas.addEventListener('touchmove', (e) => {
+  
+        that.canvas.dispatchEvent(new MouseEvent('mousemove', {
+          clientX: e.touches[0].clientX,
+          clientY: e.touches[0].clientY
+        }));
+
+      });
     }
 
     

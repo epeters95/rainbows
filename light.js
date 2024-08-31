@@ -39,7 +39,14 @@
       }
     }
     canvas.addEventListener('mousedown', mouseDownCallback);
-    canvas.addEventListener('touchstart', mouseDownCallback);
+    canvas.addEventListener('touchstart', (e) => {
+
+      canvas.dispatchEvent(new MouseEvent('mousedown', {
+        clientX: e.touches[0].clientX,
+        clientY: e.touches[0].clientY
+      }));
+
+    });
 
 
     const mouseMoveCallback = (event) => {
@@ -51,7 +58,13 @@
       }
     }
     canvas.addEventListener('mousemove', mouseMoveCallback)
-    canvas.addEventListener('touchmove', mouseMoveCallback)
+    canvas.addEventListener('touchmove', (e) => {
+      canvas.dispatchEvent(new MouseEvent('mousemove', {
+        clientX: e.touches[0].clientX,
+        clientY: e.touches[0].clientY
+      }));
+    });
+
 
     let dragOff = () => {
       isDragging = false;
