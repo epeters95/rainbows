@@ -9,6 +9,7 @@
   const canvasHeight = 600;
   const canvasWidth = 1200;
   const initialVel = 3.5;
+  const initialShiftSlider = -300;
   const initialSizeSlider = 124;
 
   const centerX = Math.floor(canvasWidth / 2);
@@ -24,9 +25,9 @@
   Game.prototype.reset = function() {
 
     
-    this.light = new Light([centerX, centerY], [8, 3], this.canvas)
+    this.light = new Light([centerX, 90], [8,1], this.canvas)
     this.slider = new Slider(sliderStart, 0, 97, sliderLength)
-    this.shiftSlider = new Slider(sliderStart, canvasHeight - sliderHeight, 816, sliderLength)
+    this.shiftSlider = new Slider(sliderStart, canvasHeight - sliderHeight, initialShiftSlider, sliderLength)
     this.sizeSlider = new Slider(sliderStart, sliderHeight + 10, initialSizeSlider, sliderLength)
 
     this.sliders = [this.slider, this.shiftSlider, this.sizeSlider];
