@@ -151,9 +151,12 @@
       // (t) => Math.cos((t + shift) * Math.PI  / 200) * maxIterations * (10 - 20 * shiftScale),
       // (t) => Math.sin((t + shift) * Math.PI / 200) * maxIterations * (10 + 10 * shiftScale),
       // (t) => -Math.cos((t + shift) * Math.PI / 200) * maxIterations * (10 + 20 * shiftScale)
-      (t) => Math.cos((t + shift) * Math.PI  / 200) * maxIterations * (10 - 20 * Math.sin(shiftScale) / Math.log(t)),
+      // (t) => Math.cos((t + shift) * Math.PI  / 200) * maxIterations * (10 - 20 * Math.sin(shiftScale) / Math.log(t)),
+      // (t) => Math.sin((t + shift) * Math.PI / 200) * maxIterations * (10 - 10 * Math.cos(shiftScale) / Math.log(t)),
+      // (t) => -Math.cos((t + shift) * Math.PI / 200) * maxIterations * (10 - 20 * shiftScale)
+      (t) => Math.cos((t + shift) * Math.PI  / 200) * maxIterations * (10 - 20 * Math.sin(shiftScale) * Math.atan(-t/2)),
       (t) => Math.sin((t + shift) * Math.PI / 200) * maxIterations * (10 - 10 * Math.cos(shiftScale) / Math.log(t)),
-      (t) => -Math.cos((t + shift) * Math.PI / 200) * maxIterations * (10 - 20 * shiftScale)
+      (t) => -Math.cos((t + shift) * Math.PI / 200) * maxIterations * (10 - 20 * Math.sin(shiftScale) * Math.atan(t/2))
       // (t) => Math.cos((t + shift)  / 10) * maxIterations * (10 - 20 * shiftScale),
       // (t) => Math.sin((t + shift) / 10) * maxIterations * (10 - 10 * shiftScale),
       // (t) => -Math.cos((t + shift) / 10) * maxIterations * (10 - 20 * shiftScale)
