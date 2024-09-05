@@ -150,25 +150,13 @@
     let y = this.pos[1];
     let shiftScale = this.shiftSlider.getRatio()
     let deltas = [
-      // (t) => Math.cos((t + shift) * Math.PI  / 200) * maxIterations * (10 - 20 * shiftScale),
-      // (t) => Math.sin((t + shift) * Math.PI / 200) * maxIterations * (10 + 10 * shiftScale),
-      // (t) => -Math.cos((t + shift) * Math.PI / 200) * maxIterations * (10 + 20 * shiftScale)
-      // (t) => Math.cos((t + shift) * Math.PI  / 200) * maxIterations * (10 - 20 * Math.sin(shiftScale) / Math.log(t)),
-      // (t) => Math.sin((t + shift) * Math.PI / 200) * maxIterations * (10 - 10 * Math.cos(shiftScale) / Math.log(t)),
-      // (t) => -Math.cos((t + shift) * Math.PI / 200) * maxIterations * (10 - 20 * shiftScale)
-      // (t) => Math.cos((t + shift) * Math.PI  / 200) * maxIterations * (10 - 20 * Math.sin(shiftScale) * Math.atan(-t/2)),
-      // (t) => Math.sin((t + shift) * Math.PI / 200) * maxIterations * (10 - 10 * Math.cos(shiftScale) / Math.log(t)),
-      // (t) => -Math.cos((t + shift) * Math.PI / 200) * maxIterations * (10 - 20 * Math.sin(shiftScale) * Math.atan(t/2))
+
       (t) => Math.cos((t + theta * .2) * Math.PI  / 200) * maxIterationss * (10 - 20 * Math.sin(shiftScale) * Math.atan(-t/2)),
       (t) => Math.sin((t + theta * .2) * Math.PI / 200) * maxIterationss * (10 - 10 * Math.cos(shiftScale) / Math.log(t)),
       (t) => -Math.cos((t + theta * .2) * Math.PI / 200) * maxIterationss * (10 - 20 * Math.sin(shiftScale) * Math.atan(t/2))
-      // (t) => Math.cos((t + shift)  / 10) * maxIterations * (10 - 20 * shiftScale),
-      // (t) => Math.sin((t + shift) / 10) * maxIterations * (10 - 10 * shiftScale),
-      // (t) => -Math.cos((t + shift) / 10) * maxIterations * (10 - 20 * shiftScale)
+      
     ]
 
-    // let hues = hue(theta * x * 8 / y, deltas, x);
-    // let hues = hue(theta, deltas, x);
     let hues = hue(shift, deltas, x);
     let maxOverflow = 555;
     let overflow = 0;
