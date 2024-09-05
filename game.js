@@ -25,7 +25,7 @@
   Game.prototype.reset = function() {
 
     
-    this.light = new Light([centerX, 90], [8,1], this.canvas)
+    this.light = new Light([0, 90], [7,4], this.canvas)
     this.slider = new Slider(sliderStart, 0, 97, sliderLength)
     this.shiftSlider = new Slider(sliderStart, canvasHeight - sliderHeight, initialShiftSlider, sliderLength)
     this.sizeSlider = new Slider(sliderStart, sliderHeight + 10, initialSizeSlider, sliderLength)
