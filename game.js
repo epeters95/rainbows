@@ -12,9 +12,16 @@
   const initialShiftSlider = -300;
   const initialSizeSlider = 124;
 
+  // Light starting points
   const centerX = Math.floor(canvasWidth / 2);
   const centerY = Math.floor(canvasHeight / 2);
-  const sliderStart = centerX - Math.floor(sliderLength / 2);
+
+  const lightPos = [0, 90];
+  const lightVel = [7, 4];
+
+  const sliderX = centerX - Math.floor(sliderLength / 2);
+  const sliderY = 0;
+  const sliderStart = 97
   
   var Game = Rainbows.Game = function(canvas) {
     this.canvas = canvas;
@@ -25,10 +32,10 @@
   Game.prototype.reset = function() {
 
     
-    this.light = new Light([0, 90], [7,4], this.canvas)
-    this.slider = new Slider(sliderStart, 0, 97, sliderLength)
-    this.shiftSlider = new Slider(sliderStart, canvasHeight - sliderHeight, initialShiftSlider, sliderLength)
-    this.sizeSlider = new Slider(sliderStart, sliderHeight + 10, initialSizeSlider, sliderLength)
+    this.light = new Light(lightPos, lightVel, this.canvas)
+    this.slider = new Slider(sliderX, sliderY, sliderStart, sliderLength)
+    this.shiftSlider = new Slider(sliderX, canvasHeight - sliderHeight, initialShiftSlider, sliderLength)
+    this.sizeSlider = new Slider(sliderX, sliderHeight + 10, initialSizeSlider, sliderLength)
 
     this.sliders = [this.slider, this.shiftSlider, this.sizeSlider];
 
