@@ -14,14 +14,13 @@
 
   // Light starting points
   const centerX = Math.floor(canvasWidth / 2);
-  const centerY = Math.floor(canvasHeight / 2);
 
   const lightPos = [0, 90];
   const lightVel = [7, 4];
 
   const sliderX = centerX - Math.floor(sliderLength / 2);
   const sliderY = 0;
-  const sliderStart = 97
+  const sliderStart = 97;
   
   var Game = Rainbows.Game = function(canvas) {
     this.canvas = canvas;

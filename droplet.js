@@ -147,7 +147,7 @@
 
     let theta = this.angleTo(this.light)
     let x = this.pos[0];
-    let y = this.pos[1];
+    // let y = this.pos[1];
     let shiftScale = this.shiftSlider.getRatio()
     let deltas = [
 
