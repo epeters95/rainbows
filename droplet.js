@@ -89,6 +89,14 @@
     }
   }
 
+  Droplet.prototype.getPositionOffset = function() {
+    let xDist = this.light.pos[0] - this.pos[0];
+    let yDist = this.light.pos[1] - this.pos[1];
+
+    let dist = Math.sqrt(Math.exp(xDist, 2), Math.exp(yDist, 2));
+    return 1 / dist;
+  }
+
   Droplet.prototype.getColor = function() {
 
     let r = '255';
