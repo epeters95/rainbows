@@ -4,13 +4,14 @@
   var Light = Rainbows.Light;
   var Slider = Rainbows.Slider;
 
-  const sliderLength = 500;
-  const sliderHeight = 20;
-  const canvasHeight = 600;
-  const canvasWidth = 1200;
-  const initialVel = 3.5;
+  const sliderLength       = 500;
+  const sliderHeight       = 20;
+  const canvasHeight       = 600;
+  const canvasWidth        = 1200;
+  const initialVel         = 3.5;
   const initialShiftSlider = -300;
-  const initialSizeSlider = 124;
+  const initialSizeSlider  = 124;
+  const sliderColor        = 'rgba(200,200,200,0.4)';
 
   // Light starting points
   const centerX = Math.floor(canvasWidth / 2);
@@ -159,7 +160,7 @@
     let widthR = sliderLength - widthL;
     //Left side
     this.ctx.beginPath();
-    this.ctx.fillStyle = 'grey';
+    this.ctx.fillStyle = sliderColor;
     this.ctx.fillRect(slider.x, slider.y, widthL, sliderHeight);
 
     //Slider
@@ -171,7 +172,7 @@
 
     //Right Side
     this.ctx.beginPath();
-    this.ctx.fillStyle = 'grey';
+    this.ctx.fillStyle = sliderColor;
     this.ctx.fillRect(slider.x + widthL + 1, slider.y, widthR, sliderHeight);
   }
 
