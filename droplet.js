@@ -75,8 +75,8 @@
     this.color = this.getColor();
     ctx.beginPath()
     ctx.arc(
-      this.pos[0],
-      this.pos[1],
+      this.pos[0] * (1 + this.getPositionOffsetX()),
+      this.pos[1] * (1 + this.getPositionOffsetY()),
       this.radius,
       0,
       2 * Math.PI
@@ -89,12 +89,20 @@
     }
   }
 
-  Droplet.prototype.getPositionOffset = function() {
-    let xDist = this.light.pos[0] - this.pos[0];
-    let yDist = this.light.pos[1] - this.pos[1];
+  Droplet.prototype.getPositionOffsetX = function() {
+    let xDist = this.pos[0] - this.light.pos[0];
+    let yDist = this.pos[1] - this.light.pos[1];
 
-    let dist = Math.sqrt(Math.exp(xDist, 2), Math.exp(yDist, 2));
-    return 1 / dist;
+    let dist = Math.sqrt(Math.pow(xDist, 2), Math.pow(yDist, 2));
+    return 1 / Math.cos(dist / 600);
+  }
+
+  Droplet.prototype.getPositionOffsetY = function() {
+    let xDist = this.pos[0] - this.light.pos[0];
+    let yDist = this.pos[1] - this.light.pos[1];
+
+    let dist = Math.sqrt(Math.pow(xDist, 2), Math.pow(yDist, 2));
+    return 1 / Math.cos(dist / 400);
   }
 
   Droplet.prototype.getColor = function() {
