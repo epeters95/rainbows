@@ -114,10 +114,9 @@
 
     // Parametrized Hue function
     let maxIterationsss = Math.PI * 22;
-    let maxIterationss = Math.PI * 12; //800;
+    let maxIterationss = Math.PI * 12;
     let maxIterations = Math.PI * 2;
     let maxHue = 255;
-    // let interval = maxIterations / 6.0;
     let interval = maxIterationsss / 6.0;
 
     // Period indicates the starting rotation at which the hue function beings
@@ -152,11 +151,11 @@
 
         if (that.parent) {
 
-          resultHue -= deltas[idx](x) / 2//(t * 1);
+          resultHue -= deltas[idx](x) / 2
 
         } else if (that.super) {
 
-          resultHue += deltas[idx](x) / 2//(t * 1);
+          resultHue += deltas[idx](x) / 2
         }
         return resultHue;
       })
@@ -164,7 +163,7 @@
 
     let theta = this.angleTo(this.light)
     let x = this.pos[0];
-    // let y = this.pos[1];
+
     let shiftScale = this.shiftSlider.getRatio()
     let deltas = [
 
@@ -179,14 +178,6 @@
     let overflow = 0;
     
     let getOverflow = (h) => Math.max(h - maxHue, 0);
-    // let getOverflow = (h) => {
-    //   if (h < 0) {
-    //     return (h * -1) / maxOverflow;
-    //   } else {
-    //     return 0;//Math.max(h - maxHue, 0) / maxOverflow;
-    //   }
-    // }
-
 
     if (hues) {
 
