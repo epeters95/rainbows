@@ -89,19 +89,20 @@
     }
   }
 
-  Droplet.prototype.getPositionOffsetX = function() {
+  Droplet.prototype.getDistanceToLight = function() {
     let xDist = this.pos[0] - this.light.pos[0];
     let yDist = this.pos[1] - this.light.pos[1];
 
-    let dist = Math.sqrt(Math.pow(xDist, 2), Math.pow(yDist, 2));
+    return Math.sqrt(Math.pow(xDist, 2), Math.pow(yDist, 2));
+  }
+
+  Droplet.prototype.getPositionOffsetX = function() {
+    let dist = this.getDistanceToLight();
     return 1 / Math.cos(dist / 600);
   }
 
   Droplet.prototype.getPositionOffsetY = function() {
-    let xDist = this.pos[0] - this.light.pos[0];
-    let yDist = this.pos[1] - this.light.pos[1];
-
-    let dist = Math.sqrt(Math.pow(xDist, 2), Math.pow(yDist, 2));
+    let dist = this.getDistanceToLight();
     return 1 / Math.cos(dist / 400);
   }
 
