@@ -113,12 +113,13 @@
     let b = '0';
 
     // Parametrized Hue function
-    let maxIterationsss = Math.PI * 22;
-    let maxIterationss = Math.PI * 12;
-    let maxIterations = Math.PI * 2;
+    // let maxIterationsss = Math.PI * 22;
+    // let maxIterationss = Math.PI * 12;
+    // let maxIterations = Math.PI * 2;
+    let maxIterations = Math.PI * 12
     let maxHue = 255;
-    let interval = maxIterationsss / 6.0;
-
+    let interval = maxIterations / 6.0;
+    
     // Period indicates the starting rotation at which the hue function beings
     let period = this.light.rotationValue * maxIterations
 
@@ -163,21 +164,24 @@
 
     let theta = this.angleTo(this.light)
     let x = this.pos[0];
-
+    let y = this.pos[1];
     let shiftScale = this.shiftSlider.getRatio()
     let deltas = [
-
-      (t) => Math.cos((t + theta * .2) * Math.PI  / 200) * maxIterationss * (10 - 20 * Math.sin(shiftScale) * Math.atan(-t/2)),
-      (t) => Math.sin((t + theta * .2) * Math.PI / 200) * maxIterationss * (10 - 10 * Math.cos(shiftScale) / Math.log(t)),
-      (t) => -Math.cos((t + theta * .2) * Math.PI / 200) * maxIterationss * (10 - 20 * Math.sin(shiftScale) * Math.atan(t/2))
-      
+      (t) => Math.cos((t + shift) * Math.PI  / 200) * maxIterations * (10 + 20 * shiftScale),
+      (t) => Math.sin((t + shift) * Math.PI / 200) * maxIterations * (10 + 10 * shiftScale),
+      (t) => -Math.cos((t + shift) * Math.PI / 200) * maxIterations * (10 + 20 * shiftScale)
+      // (t) => Math.cos((t + theta * .2) * Math.PI  / 200) * maxIterationss * (10 - 20 * Math.sin(shiftScale) * Math.atan(-t/2)),
+      // (t) => Math.sin((t + theta * .2) * Math.PI / 200) * maxIterationss * (10 - 10 * Math.cos(shiftScale) / Math.log(t)),
+      // (t) => -Math.cos((t + theta * .2) * Math.PI / 200) * maxIterationss * (10 - 20 * Math.sin(shiftScale) * Math.atan(t/2))
     ]
 
-    let hues = hue(shift, deltas, x);
+    //let hues = hue(shift, deltas, x);
+    let hues = hue(theta * x * 8 / y, deltas, x);
     let maxOverflow = 555;
     let overflow = 0;
     
     let getOverflow = (h) => Math.max(h - maxHue, 0);
+
 
     if (hues) {
 
