@@ -1,4 +1,4 @@
-(function(root) {
+((root) => {
   var Rainbows = root.Rainbows = (root.Rainbows || {});
 
   var Slider = Rainbows.Slider = function(x, y, leftWidth, length) {
@@ -25,4 +25,4 @@
     this.held = false;
   }
 
-}(this));
+})(this);

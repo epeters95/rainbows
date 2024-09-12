@@ -1,4 +1,4 @@
-(function (root) {
+((root) => {
   var Rainbows = root.Rainbows = (root.Rainbows || {});
   
   var MovingObject = Rainbows.MovingObject = function(pos, vel, radius, color='rgb(255,0,255)') {
@@ -40,7 +40,7 @@
     var y1 = this.pos[1];
     var x2 = otherObject.pos[0];
     var y2 = otherObject.pos[1];
-    var angle = Math.atanBetter(y2 - y1, x2 - x1);
+    var angle = atanBetter(y2 - y1, x2 - x1);
     return angle;
   }
 
@@ -50,7 +50,7 @@
     }
   }
 
-  Math.atanBetter = function(y, x) {
+  const atanBetter = (y, x) => {
     var value = 0;
     if (y >= 0 && x === 0) {
       value = Math.PI / 2;

@@ -1,4 +1,4 @@
-(function(root){
+((root) => {
   var Rainbows = root.Rainbows = (root.Rainbows || {});
   var Droplet = Rainbows.Droplet;
   var Light = Rainbows.Light;
@@ -55,7 +55,7 @@
     };
 
 
-    const addSliderEventsFor = function(that, slidersArray) {
+    const addSliderEventsFor = (that, slidersArray) => {
 
       // Mouse down / Touch start
 
@@ -69,7 +69,7 @@
 
         const between = (a, b, c) => { return (a >= b && a <= c) };
 
-        slidersArray.forEach( function(slider) {
+        slidersArray.forEach( (slider) => {
           let x = slider.getPlace();
           if (!slider.held
               && between(mouse.x, x - 5, x + 5)
@@ -94,7 +94,7 @@
       // Mouse Up / Touch end
 
       const mouseUpCallback = () => {
-        slidersArray.forEach( function(slider) {
+        slidersArray.forEach( (slider) => {
           slider.letgo();
         });
       }
@@ -105,7 +105,7 @@
       // Mouse Move / Touch move
 
       const mouseMoveCallback = (e) => {
-        slidersArray.forEach( function(slider) {
+        slidersArray.forEach( (slider) => {
           if (slider.held) {
             const mouse = {
               x: e.pageX - canvasPosition.x,
@@ -245,4 +245,4 @@
     this.windowID = window.setInterval(this.step.bind(this), 30);
   };
   
-}(this));
+})(this);

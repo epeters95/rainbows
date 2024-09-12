@@ -1,4 +1,4 @@
-(function (root) {
+((root) => {
   var Rainbows = root.Rainbows = (root.Rainbows || {});
 
   // 2014-era subclassing implementation

@@ -1,4 +1,4 @@
-(function (root) {
+((root) => {
   var Rainbows = root.Rainbows = (root.Rainbows || {});
   var Light = Rainbows.Light;
 
@@ -36,7 +36,7 @@
   };
 
 
-  const setSubDroplet = function(pos, vel, light, slider, shiftSlider, isSuper=false) {
+  const setSubDroplet = (pos, vel, light, slider, shiftSlider, isSuper=false) => {
     return new Droplet(pos, vel, light, slider, shiftSlider, false, isSuper);
   }
 
