@@ -3,10 +3,7 @@
   var Light = Rainbows.Light;
 
 
-  class Droplet extends Rainbows.MovingObject {
-
-    color                = "rgb(136, 180, 255)";
-    
+  class Droplet extends Rainbows.MovingObject {    
 
     constructor(pos, vel, light, slider, shiftSlider, parent=true, isSuper=false) {
       
@@ -118,8 +115,6 @@
       // Period indicates the starting rotation at which the hue function beings
       let period = this.light.rotationValue * maxIterations
 
-      let that = this;
-
       // Shift will shift the end rgb components over sine and cosine functions
       let shift = this.distanceTo(this.light) / 2
 
@@ -145,11 +140,11 @@
         return fArray[i].map( (f, idx) => {
           let resultHue = Math.round(f(t))
 
-          if (that.parent) {
+          if (this.parent) {
 
             resultHue -= deltas[idx](x) / 2
 
-          } else if (that.isSuper) {
+          } else if (this.isSuper) {
 
             resultHue += deltas[idx](x) / 2
           }

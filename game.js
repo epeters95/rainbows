@@ -56,7 +56,7 @@
       };
 
 
-      const addSliderEventsFor = (that, slidersArray) => {
+      const addSliderEventsFor = (slidersArray) => {
 
         // Mouse down / Touch start
 
@@ -81,10 +81,10 @@
           })
         }
 
-        that.canvas.addEventListener('mousedown', mouseDownCallback);
-        that.canvas.addEventListener('touchstart', (e) => {
+        this.canvas.addEventListener('mousedown', mouseDownCallback);
+        this.canvas.addEventListener('touchstart', (e) => {
 
-          that.canvas.dispatchEvent(new MouseEvent('mousedown', {
+          this.canvas.dispatchEvent(new MouseEvent('mousedown', {
             clientX: e.touches[0].clientX,
             clientY: e.touches[0].clientY
           }));
@@ -99,8 +99,8 @@
             slider.letgo();
           });
         }
-        that.canvas.addEventListener('mouseup', mouseUpCallback);
-        that.canvas.addEventListener('touchend', mouseUpCallback);
+        this.canvas.addEventListener('mouseup', mouseUpCallback);
+        this.canvas.addEventListener('touchend', mouseUpCallback);
 
 
         // Mouse Move / Touch move
@@ -120,18 +120,18 @@
             }
           });
         }
-        that.canvas.addEventListener('mousemove', mouseMoveCallback);
-        that.canvas.addEventListener('touchmove', (e) => {
+        this.canvas.addEventListener('mousemove', mouseMoveCallback);
+        this.canvas.addEventListener('touchmove', (e) => {
     
-          that.canvas.dispatchEvent(new MouseEvent('mousemove', {
+          this.canvas.dispatchEvent(new MouseEvent('mousemove', {
             clientX: e.touches[0].clientX,
             clientY: e.touches[0].clientY
           }));
 
         });
       }
-      let that = this;
-      addSliderEventsFor(that, this.sliders)
+
+      addSliderEventsFor(this.sliders)
 
       window.clearInterval(this.endID);
     }
@@ -148,7 +148,7 @@
       this.light.draw(this.ctx);
 
       let that = this;
-      this.sliders.forEach(function(slider) {
+      this.sliders.forEach((slider) => {
         that.drawSlider(slider)
       })
     }
@@ -184,7 +184,7 @@
       this.light.move()
     }
 
-    adjustDroplet(droplet, that=null) {
+    adjustDroplet(droplet, isParent=false) {
       droplet.pos[0] = droplet.pos[0] % canvasWidth;
       droplet.pos[1] = droplet.pos[1] % canvasHeight;
       if (droplet.pos[0] < 0) {
@@ -195,8 +195,8 @@
       }
 
       // Rotate trajection of all droplets by slider value
-      if (that && that.slider.held) {
-        let angle = that.slider.getRatio() * Math.PI * 2;
+      if (isParent && this.slider.held) {
+        let angle = this.slider.getRatio() * Math.PI * 2;
         let compX = Math.cos(angle) * initialVel;
         let compY = Math.sin(angle) * initialVel;
         
@@ -204,9 +204,10 @@
       }
 
       // Increase droplet size
-      if (that && that.sizeSlider.held) {
-        let scaleFactor = that.sizeSlider.leftWidth / initialSizeSlider;
-        droplet.radius = Math.abs(Rainbows.Droplet.RADIUS * scaleFactor);
+      let radius = 15;
+      if (isParent && this.sizeSlider.held) {
+        let scaleFactor = this.sizeSlider.leftWidth / initialSizeSlider;
+        droplet.radius = Math.abs(radius * scaleFactor);
       }
     }
     
@@ -234,7 +235,7 @@
       }
 
       for (let i = 0; i < this.droplets.length; i++) {
-        this.adjustDroplet(this.droplets[i], this);
+        this.adjustDroplet(this.droplets[i], true);
         this.adjustDroplet(this.droplets[i].subDroplet);
         this.adjustDroplet(this.droplets[i].superDroplet);
       }

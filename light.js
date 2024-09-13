@@ -1,14 +1,14 @@
 ((root) => {
   var Rainbows = root.Rainbows = (root.Rainbows || {});
 
-  const radius = 10;
   const color  = "#FFFFFF";
 
 
   class Light extends Rainbows.MovingObject {
 
-
     constructor(pos, vel, canvas) {
+
+      let radius = 10;
 
       super(pos, vel, radius, color);
       this.rotationValue = 0;      
@@ -16,7 +16,6 @@
       var isDragging = false;
       this.offsetX = 0;
       this.offsetY = 0;
-      let that = this;
 
       // Click events
       
@@ -24,13 +23,13 @@
         const mouseX = event.clientX - canvas.getBoundingClientRect().left;
         const mouseY = event.clientY - canvas.getBoundingClientRect().top;
 
-        const dist = Math.sqrt((mouseX - that.pos[0]) ** 2 + (mouseY - this.pos[1]) ** 2);
+        const dist = Math.sqrt((mouseX - this.pos[0]) ** 2 + (mouseY - this.pos[1]) ** 2);
 
-        if (dist <= that.radius) {
+        if (dist <= this.radius) {
           isDragging = true;
 
-          this.offsetX = that.pos[0]- mouseX;
-          this.offsetY = that.pos[1] - mouseY;
+          this.offsetX = this.pos[0]- mouseX;
+          this.offsetY = this.pos[1] - mouseY;
         }
       }
       canvas.addEventListener('mousedown', mouseDownCallback);
