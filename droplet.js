@@ -1,7 +1,5 @@
 ((root) => {
   var Rainbows = root.Rainbows = (root.Rainbows || {});
-  var Light = Rainbows.Light;
-
 
   class Droplet extends Rainbows.MovingObject {    
 
