@@ -52,23 +52,27 @@
     }
 
     static atanBetter(y, x) {
-      var value = 0;
+      
+      let atan = Math.atan(y / x)
+
       if (y >= 0 && x === 0) {
-        value = Math.PI / 2;
+        atan = Math.PI / 2;
+
       } else if ( y < 0 && x === 0) {
-        value = 3 * Math.PI / 2;
-      } else if (y < 0 && x < 0) {
-        value = Math.atan(y / x) + Math.PI;
-      } else if (y > 0 && x < 0) {
-        value = Math.atan(y / x) + Math.PI;
+        atan = 3 * Math.PI / 2;
+
+      } else if (y !== 0 && x < 0) {
+        atan += Math.PI;
+
       } else if (y < 0 && x > 0) {
-        value = Math.atan(y / x) + 2 * Math.PI;
+        atan += 2 * Math.PI;
+
       } else if (y === 0 && x < 0) {
-        value = Math.PI;
-      } else {
-        value = Math.atan(y / x);
+        atan = Math.PI;
+
       }
-      return value;
+      
+      return atan;
     }
   }
   Rainbows.MovingObject = MovingObject;
