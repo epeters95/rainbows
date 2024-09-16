@@ -65,8 +65,8 @@
       this.color = this.getColor();
       ctx.beginPath()
       ctx.arc(
-        this.pos[0] * (1 + this.getPositionOffsetX()),
-        this.pos[1] * (1 + this.getPositionOffsetY()),
+        this.pos[0] * (0.75 + this.getPositionOffsetX()),
+        this.pos[1] * (0.75 + this.getPositionOffsetY()),
         this.radius,
         0,
         2 * Math.PI
@@ -88,12 +88,22 @@
 
     getPositionOffsetX() {
       let dist = this.getDistanceToLight();
-      return 1 / Math.cos(dist / 600);
+      let offset = 1 / Math.cos(dist / 700);
+      if (offset > 5) {
+        offset -= (offset - 5)
+      }
+      return offset
     }
 
     getPositionOffsetY() {
       let dist = this.getDistanceToLight();
-      return 1 / Math.cos(dist / 400);
+      let offset = 1 / Math.cos(dist / 500);
+      if (offset > 5) {
+        offset -= (offset - 5)
+      } else if (offset < -5) {
+        offset += (offset + 5)
+      }
+      return offset
     }
 
     getColor() {
