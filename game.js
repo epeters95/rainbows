@@ -262,3 +262,6 @@
   Rainbows.Game = Game;
   
 })(this);
+
+var canvas = document.getElementsByTagName("canvas")[0];
+new Rainbows.Game(canvas).start();

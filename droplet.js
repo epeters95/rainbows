@@ -86,8 +86,8 @@
       ctx.strokeStyle = this.color;
       ctx.stroke();
       if (this.parent) {
-        this.subDroplet.draw(ctx)
-        this.superDroplet.draw(ctx)
+        this.subDroplet.draw(ctx, curved)
+        this.superDroplet.draw(ctx, curved)
       }
     }
 
