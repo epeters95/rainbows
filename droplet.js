@@ -61,22 +61,38 @@
       return new Droplet(pos, vel, light, slider, shiftSlider, false, isSuper);
     }
 
-    draw(ctx) {
+    draw(ctx, curved=false) {
       this.color = this.getColor();
       ctx.beginPath()
-      ctx.arc(
-        this.pos[0] * (0.75 + this.getPositionOffsetX()),
-        this.pos[1] * (0.75 + this.getPositionOffsetY()),
-        this.radius,
-        0,
-        2 * Math.PI
-      );
+
+      if (curved) {
+        ctx.arc(
+          this.pos[0] * (0.75 + this.getPositionOffsetX()),
+          this.pos[1] * (0.75 + this.getPositionOffsetY()),
+          this.radius,
+          0,
+          2 * Math.PI
+        );
+      }
+      else {
+        ctx.arc(
+          this.pos[0],
+          this.pos[1],
+          this.radius,
+          0,
+          2 * Math.PI
+        );
+      }
       ctx.strokeStyle = this.color;
       ctx.stroke();
       if (this.parent) {
         this.subDroplet.draw(ctx)
         this.superDroplet.draw(ctx)
       }
+    }
+
+    drawCurved(ctx) {
+      this.draw(ctx, true);
     }
 
     getDistanceToLight() {

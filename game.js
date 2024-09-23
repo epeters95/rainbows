@@ -22,6 +22,15 @@
   const sliderX = centerX - Math.floor(sliderLength / 2);
   const sliderY = 0;
   const sliderStart = 97;
+
+  // Configuration input
+  let alternateConfig = false;
+
+  const configSwitch = document.getElementById("config_switch");
+
+  configSwitch.addEventListener("click", (e) => {
+    alternateConfig = configSwitch.checked;
+  });
   
   class Game {
 
@@ -136,13 +145,17 @@
       window.clearInterval(this.endID);
     }
     
-    draw() {
+    draw(alternateConfig=false) {
       this.ctx.clearRect(0, 0, canvasWidth, canvasHeight);
       this.ctx.fillStyle = "black";
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
       for (let i = 0; i < this.droplets.length; i++) {
-        this.droplets[i].draw(this.ctx);
+        if (alternateConfig) {
+          this.droplets[i].drawCurved(this.ctx);
+        } else {
+          this.droplets[i].draw(this.ctx);
+        }
       }
 
       this.light.draw(this.ctx);
@@ -214,7 +227,7 @@
     step() {
       
       this.move();
-      this.draw();
+      this.draw(alternateConfig);
       this.light.rotate();
 
       if (this.light.pos[0] < 0) {
