@@ -24,12 +24,12 @@
   const sliderStart = 97;
 
   // Configuration input
-  let alternateConfig = false;
+  let useCurve = false;
 
-  const configSwitch = document.getElementById("config_switch");
+  const curveSwitch = document.getElementById("curve_switch");
 
-  configSwitch.addEventListener("click", (e) => {
-    alternateConfig = configSwitch.checked;
+  curveSwitch.addEventListener("click", (e) => {
+    useCurve = curveSwitch.checked;
   });
   
   class Game {
@@ -145,13 +145,13 @@
       window.clearInterval(this.endID);
     }
     
-    draw(alternateConfig=false) {
+    draw(useCurve=false) {
       this.ctx.clearRect(0, 0, canvasWidth, canvasHeight);
       this.ctx.fillStyle = "black";
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
       for (let i = 0; i < this.droplets.length; i++) {
-        if (alternateConfig) {
+        if (useCurve) {
           this.droplets[i].drawCurved(this.ctx);
         } else {
           this.droplets[i].draw(this.ctx);
@@ -227,7 +227,7 @@
     step() {
       
       this.move();
-      this.draw(alternateConfig);
+      this.draw(useCurve);
       this.light.rotate();
 
       if (this.light.pos[0] < 0) {
