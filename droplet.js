@@ -142,8 +142,8 @@
       // Shift will shift the end rgb components over sine and cosine functions
       let shift = this.distanceTo(this.light) / 2
 
-      let maxF = () => maxHue;
-      let minF = () => 0;
+      let maxF = (t) => maxHue + 0.5 * Math.sin(t);
+      let minF = (t) => 0.5 * Math.sin(t);
       let incF = (t) => (maxHue / interval) * ((t + period) % interval);
       let decF = (t) => (maxHue / interval) * (interval - ((t + period) % interval));
 
@@ -184,9 +184,6 @@
         (t) => Math.cos((t + shift) * Math.PI  / 200) * maxIterations * (10 + 20 * shiftScale),
         (t) => Math.sin((t + shift) * Math.PI / 200) * maxIterations * (10 + 10 * shiftScale),
         (t) => -Math.cos((t + shift) * Math.PI / 200) * maxIterations * (10 + 20 * shiftScale)
-        // (t) => Math.cos((t + theta * .2) * Math.PI  / 200) * maxIterationss * (10 - 20 * Math.sin(shiftScale) * Math.atan(-t/2)),
-        // (t) => Math.sin((t + theta * .2) * Math.PI / 200) * maxIterationss * (10 - 10 * Math.cos(shiftScale) / Math.log(t)),
-        // (t) => -Math.cos((t + theta * .2) * Math.PI / 200) * maxIterationss * (10 - 20 * Math.sin(shiftScale) * Math.atan(t/2))
       ]
 
       //let hues = hue(shift, deltas, x);
