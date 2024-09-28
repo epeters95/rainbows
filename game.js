@@ -28,7 +28,7 @@
 
   const curveSwitch = document.getElementById("curve_switch");
 
-  curveSwitch.addEventListener("click", (e) => {
+  curveSwitch.addEventListener("click", () => {
     useCurve = curveSwitch.checked;
   });
   
@@ -261,7 +261,7 @@
 
   Rainbows.Game = Game;
   
-})(this);
+  var canvas = document.getElementsByTagName("canvas")[0];
+  new Rainbows.Game(canvas).start();
 
-var canvas = document.getElementsByTagName("canvas")[0];
-new Rainbows.Game(canvas).start();
+})(this);

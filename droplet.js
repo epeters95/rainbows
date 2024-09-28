@@ -129,9 +129,6 @@
       let b = '0';
 
       // Parametrized Hue function
-      // let maxIterationsss = Math.PI * 22;
-      // let maxIterationss = Math.PI * 12;
-      // let maxIterations = Math.PI * 2;
       let maxIterations = Math.PI * 12
       let maxHue = 255;
       let interval = maxIterations / 6.0;
