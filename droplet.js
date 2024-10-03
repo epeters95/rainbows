@@ -7,10 +7,10 @@
       
       let radius = 5;
       let subDropletVelocity   = 1.5;
-      let superDropletVelocity = 2.9;
+      let superDropletVelocity = 2.6;
 
       if (parent) {
-        radius = 15;
+        radius = 10;
       } else if (isSuper) {
         radius = 28;
       }
@@ -34,10 +34,10 @@
      
       let width           = 30;
       let height          = 15;
-      let separationPx    = 5;
-      let dropletVelocity = 2.2;
+      let separationPx    = 10;
+      let dropletVelocity = 2.0;
       let velocity        = [dropletVelocity, 0];
-      let defaultRadius   = 15;
+      let defaultRadius   = 10;
 
       // 2D array of the moving droplets
       let mists = []
