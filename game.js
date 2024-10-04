@@ -86,7 +86,7 @@
                 && between(mouse.y, slider.y, slider.y + sliderHeight)
             ) {
               slider.hodl();
-              slider.leftWidth = mouse.x - slider.x;
+              slider.setPlace(mouse.x)
             }
           })
         }

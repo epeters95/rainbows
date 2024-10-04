@@ -15,6 +15,10 @@
       return this.x + this.leftWidth;
     }
 
+    setPlace(newX) {
+      this.leftWidth = newX - this.x;
+    }
+
     getRatio() {
       return this.leftWidth / (this.length);
     }
