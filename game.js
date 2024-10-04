@@ -82,10 +82,11 @@
           slidersArray.forEach( (slider) => {
             let x = slider.getPlace();
             if (!slider.held
-                && between(mouse.x, x - 5, x + 5)
+                && between(mouse.x, sliderX, sliderX + sliderLength)
                 && between(mouse.y, slider.y, slider.y + sliderHeight)
             ) {
               slider.hodl();
+              slider.leftWidth = mouse.x - slider.x;
             }
           })
         }
