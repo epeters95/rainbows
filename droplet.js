@@ -61,8 +61,8 @@
       return new Droplet(pos, vel, light, slider, shiftSlider, false, isSuper);
     }
 
-    draw(ctx, curved=false) {
-      this.color = this.getColor();
+    draw(ctx, curved=false, overflow=false) {
+      this.color = this.getColor(overflow);
       ctx.beginPath()
 
       if (curved) {
@@ -122,7 +122,7 @@
       return offset
     }
 
-    getColor() {
+    getColor(overflowToAlpha=false) {
 
       let r = '255';
       let g = '255';
@@ -200,7 +200,12 @@
         overflow = getOverflow(r) + getOverflow(g) + getOverflow(b) 
       }
 
-      let color = 'rgba(' + Math.abs(r) + ',' + Math.abs(g) + ',' + Math.abs(b) + ',' + (1 - (overflow / maxOverflow )) + ')';
+      let alpha = 1;
+      if (overflowToAlpha) {
+        alpha = 1 - (overflow / maxOverflow);
+      }
+
+      let color = 'rgba(' + Math.abs(r) + ',' + Math.abs(g) + ',' + Math.abs(b) + ',' + alpha + ')';
       return color;
     }
   }

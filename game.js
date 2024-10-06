@@ -25,11 +25,17 @@
 
   // Configuration input
   let useCurve = false;
+  let useOverflow = false;
 
   const curveSwitch = document.getElementById("curve_switch");
+  const overflowSwitch = document.getElementById("overflow_switch");
 
   curveSwitch.addEventListener("click", () => {
     useCurve = curveSwitch.checked;
+  });
+
+  overflowSwitch.addEventListener("click", () => {
+    useOverflow = overflowSwitch.checked;
   });
   
   class Game {
@@ -146,16 +152,16 @@
       window.clearInterval(this.endID);
     }
     
-    draw(useCurve=false) {
+    draw(useCurve=false, useOverflow=false) {
       this.ctx.clearRect(0, 0, canvasWidth, canvasHeight);
       this.ctx.fillStyle = "black";
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
       for (let i = 0; i < this.droplets.length; i++) {
         if (useCurve) {
-          this.droplets[i].drawCurved(this.ctx);
+          this.droplets[i].drawCurved(this.ctx, useOverflow);
         } else {
-          this.droplets[i].draw(this.ctx);
+          this.droplets[i].draw(this.ctx, useOverflow);
         }
       }
 
@@ -228,7 +234,7 @@
     step() {
       
       this.move();
-      this.draw(useCurve);
+      this.draw(useCurve, useOverflow);
       this.light.rotate();
 
       if (this.light.pos[0] < 0) {
