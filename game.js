@@ -158,11 +158,7 @@
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
       for (let i = 0; i < this.droplets.length; i++) {
-        if (useCurve) {
-          this.droplets[i].drawCurved(this.ctx, useOverflow);
-        } else {
-          this.droplets[i].draw(this.ctx, useOverflow);
-        }
+        this.droplets[i].draw(this.ctx, useCurve, useOverflow);
       }
 
       this.light.draw(this.ctx);

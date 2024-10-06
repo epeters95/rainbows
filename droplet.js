@@ -91,10 +91,6 @@
       }
     }
 
-    drawCurved(ctx) {
-      this.draw(ctx, true);
-    }
-
     getDistanceToLight() {
       let xDist = this.pos[0] - this.light.pos[0];
       let yDist = this.pos[1] - this.light.pos[1];
