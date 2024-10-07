@@ -61,8 +61,8 @@
       return new Droplet(pos, vel, light, slider, shiftSlider, false, isSuper);
     }
 
-    draw(ctx, curved=false, overflow=false) {
-      this.color = this.getColor(overflow);
+    draw(ctx, curved=false, overflow=false, flipTrig=false) {
+      this.color = this.getColor(overflow, flipTrig);
       ctx.beginPath()
 
       if (curved) {
@@ -118,11 +118,18 @@
       return offset
     }
 
-    getColor(overflowToAlpha=false) {
+    getColor(overflowToAlpha=false, flipTrig=false) {
 
       let r = '255';
       let g = '255';
       let b = '0';
+
+      let sinFunc = Math.sin;
+      let cosFunc = Math.cos;
+
+      if (flipTrig) {
+        sinFunc, cosFunc = cosFunc, sinFunc
+      }
 
       // Parametrized Hue function
       let maxIterations = Math.PI * 12
@@ -135,8 +142,8 @@
       // Shift will shift the end rgb components over sine and cosine functions
       let shift = this.distanceTo(this.light) / 2
 
-      let maxF = (t) => maxHue + 0.5 * Math.sin(t);
-      let minF = (t) => 0.5 * Math.sin(t);
+      let maxF = (t) => maxHue + 0.5 * sinFunc(t);
+      let minF = (t) => 0.5 * sinFunc(t);
       let incF = (t) => (maxHue / interval) * ((t + period) % interval);
       let decF = (t) => (maxHue / interval) * (interval - ((t + period) % interval));
 
@@ -174,9 +181,9 @@
       let y = this.pos[1];
       let shiftScale = this.shiftSlider.getRatio()
       let deltas = [
-        (t) => Math.cos((t + shift) * Math.PI  / 200) * maxIterations * (10 + 20 * shiftScale),
-        (t) => Math.sin((t + shift) * Math.PI / 200) * maxIterations * (10 + 10 * shiftScale),
-        (t) => -Math.cos((t + shift) * Math.PI / 200) * maxIterations * (10 + 20 * shiftScale)
+        (t) => cosFunc((t + shift) * Math.PI  / 200) * maxIterations * (10 + 20 * shiftScale),
+        (t) => sinFunc((t + shift) * Math.PI / 200) * maxIterations * (10 + 10 * shiftScale),
+        (t) => -cosFunc((t + shift) * Math.PI / 200) * maxIterations * (10 + 20 * shiftScale)
       ]
 
       //let hues = hue(shift, deltas, x);

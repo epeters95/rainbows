@@ -26,9 +26,11 @@
   // Configuration input
   let useCurve = false;
   let useOverflow = false;
+  let useFlipTrig = false;
 
   const curveSwitch = document.getElementById("curve_switch");
   const overflowSwitch = document.getElementById("overflow_switch");
+  const flipTrigSwitch = document.getElementById("flip_trig");
 
   curveSwitch.addEventListener("click", () => {
     useCurve = curveSwitch.checked;
@@ -37,7 +39,11 @@
   overflowSwitch.addEventListener("click", () => {
     useOverflow = overflowSwitch.checked;
   });
-  
+
+  flipTrigSwitch.addEventListener("click", () => {
+    useFlipTrig = flipTrigSwitch.checked;
+  });
+
   class Game {
 
     constructor(canvas) {
@@ -152,13 +158,13 @@
       window.clearInterval(this.endID);
     }
     
-    draw(useCurve=false, useOverflow=false) {
+    draw(useCurve=false, useOverflow=false, useFlipTrig=false) {
       this.ctx.clearRect(0, 0, canvasWidth, canvasHeight);
       this.ctx.fillStyle = "black";
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
       for (let i = 0; i < this.droplets.length; i++) {
-        this.droplets[i].draw(this.ctx, useCurve, useOverflow);
+        this.droplets[i].draw(this.ctx, useCurve, useOverflow, useFlipTrig);
       }
 
       this.light.draw(this.ctx);
@@ -230,7 +236,7 @@
     step() {
       
       this.move();
-      this.draw(useCurve, useOverflow);
+      this.draw(useCurve, useOverflow, useFlipTrig);
       this.light.rotate();
 
       if (this.light.pos[0] < 0) {
