@@ -17,7 +17,7 @@
   const centerX = Math.floor(canvasWidth / 2);
 
   const lightPos = [0, 90];
-  const lightVel = [7, 4];
+  const lightVel = [5, 2.8];
 
   const sliderX = centerX - Math.floor(sliderLength / 2);
   const sliderY = 0;

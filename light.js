@@ -25,7 +25,7 @@
 
         const dist = Math.sqrt((mouseX - this.pos[0]) ** 2 + (mouseY - this.pos[1]) ** 2);
 
-        if (dist <= this.radius) {
+        if (dist <= (this.radius + 8)) {
           isDragging = true;
 
           this.offsetX = this.pos[0]- mouseX;
