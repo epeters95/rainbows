@@ -9,7 +9,7 @@
   const canvasHeight       = 600;
   const canvasWidth        = 1200;
   const initialVel         = 3.5;
-  const initialShiftSlider = -300;
+  const initialShiftSlider = 0;
   const initialSizeSlider  = 124;
   const sliderColor        = 'rgba(200,200,200,0.4)';
 

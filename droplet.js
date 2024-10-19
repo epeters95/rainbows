@@ -126,9 +126,10 @@
 
       let sinFunc = Math.sin;
       let cosFunc = Math.cos;
+      let tanFunc = Math.tan;
 
       if (flipTrig) {
-        sinFunc, cosFunc = cosFunc, sinFunc
+        sinFunc, cosFunc = cosFunc, tanFunc
       }
 
       // Parametrized Hue function
