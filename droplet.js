@@ -128,12 +128,15 @@
       let cosFunc = Math.cos;
       let tanFunc = Math.tan;
 
+      let iterationMultiplier = 12;
+
       if (flipTrig) {
         sinFunc, cosFunc = cosFunc, tanFunc
+        iterationMultiplier = 4;
       }
 
       // Parametrized Hue function
-      let maxIterations = Math.PI * 12
+      let maxIterations = Math.PI * iterationMultiplier
       let maxHue = 255;
       let interval = maxIterations / 6.0;
       
@@ -187,8 +190,10 @@
         (t) => -cosFunc((t + shift) * Math.PI / 200) * maxIterations * (10 + 20 * shiftScale)
       ]
 
-      //let hues = hue(shift, deltas, x);
       let hues = hue(theta * x * 8 / y, deltas, x);
+      if (flipTrig) {
+        hues = hue(shift, deltas, x);
+      }
       let maxOverflow = 555;
       let overflow = 0;
       
