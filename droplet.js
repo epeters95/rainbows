@@ -34,10 +34,10 @@
       this.t_Function = (theta, x, y) => theta * x * 8 / y;
 
       // maps t value as an RGB hue, plus makes some tweaks given deltas and x
-      this.hue_Function = (fArray, period, interval, t, deltas, x) => {
+      this.hue_Function = (period, interval, t, deltas, x) => {
 
-        let maxF = (t) => this.maxHue + 0.5 * sinFunc(t);
-        let minF = (t) => 0.5 * sinFunc(t);
+        let maxF = (t) => this.maxHue + 0.5 * Math.sin(t);
+        let minF = (t) => 0.5 * Math.sin(t);
         let incF = (t) => (this.maxHue / interval) * ((t + period) % interval);
         let decF = (t) => (this.maxHue / interval) * (interval - ((t + period) % interval));
 
@@ -197,11 +197,11 @@
       let x = this.pos[0];
       let y = this.pos[1];
       let shiftScale = this.shiftSlider.getRatio()
-      let deltas = this.buildDeltas(t, shift, maxIterations, shiftScale);
+      let deltas = this.buildDeltas(shift, maxIterations, shiftScale);
 
-      let hues = this.hue_Function(fArray, period, interval, this.t_Function(theta, x, y), deltas, x);
+      let hues = this.hue_Function(period, interval, this.t_Function(theta, x, y), deltas, x);
       if (flipTrig) {
-        hues = this.hue_Function(fArray, period, interval, shift, deltas, x);
+        hues = this.hue_Function(period, interval, shift, deltas, x);
       }
       let maxOverflow = 555;
       let overflow = 0;
