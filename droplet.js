@@ -28,6 +28,54 @@
       this.shiftSlider = shiftSlider;
       this.parent = parent;
       this.isSuper = isSuper;
+      this.maxHue = 255;
+
+      // t parameter function (shape of rainbow)
+      this.t_Function = (theta, x, y) => theta * x * 8 / y;
+
+      // maps t value as an RGB hue, plus makes some tweaks given deltas and x
+      this.hue_Function = (fArray, period, interval, t, deltas, x) => {
+
+        let maxF = (t) => this.maxHue + 0.5 * sinFunc(t);
+        let minF = (t) => 0.5 * sinFunc(t);
+        let incF = (t) => (this.maxHue / interval) * ((t + period) % interval);
+        let decF = (t) => (this.maxHue / interval) * (interval - ((t + period) % interval));
+
+        let fArray = [
+          [ maxF, incF, minF ],
+          [ decF, maxF, minF ],
+          [ minF, maxF, incF ],
+          [ minF, decF, maxF ],
+          [ incF, minF, maxF ],
+          [ maxF, minF, decF ]
+        ];
+
+        let i = Math.floor( (t + period) / interval) % 6
+        if (fArray[i] === undefined) {
+          return null;
+        }
+        return fArray[i].map( (f, idx) => {
+          let resultHue = Math.round(f(t))
+
+          if (this.parent) {
+
+            resultHue -= deltas[idx](x) / 2
+
+          } else if (this.isSuper) {
+
+            resultHue += deltas[idx](x) / 2
+          }
+          return resultHue;
+        })
+      };
+
+      this.buildDeltas = (t, shift, maxIterations, shiftScale) => {
+        return [
+          (t) => Math.cos((t + shift) * Math.PI  / 200) * maxIterations * (10 + 20 * shiftScale),
+          (t) => Math.sin((t + shift) * Math.PI / 200) * maxIterations * (10 + 10 * shiftScale),
+          (t) => -Math.cos((t + shift) * Math.PI / 200) * maxIterations * (10 + 20 * shiftScale)
+        ]
+      }
     }
 
     static mistArray(startX, startY, light, slider, shiftSlider) {
@@ -137,7 +185,6 @@
 
       // Parametrized Hue function
       let maxIterations = Math.PI * iterationMultiplier
-      let maxHue = 255;
       let interval = maxIterations / 6.0;
       
       // Period indicates the starting rotation at which the hue function beings
@@ -146,58 +193,20 @@
       // Shift will shift the end rgb components over sine and cosine functions
       let shift = this.distanceTo(this.light) / 2
 
-      let maxF = (t) => maxHue + 0.5 * sinFunc(t);
-      let minF = (t) => 0.5 * sinFunc(t);
-      let incF = (t) => (maxHue / interval) * ((t + period) % interval);
-      let decF = (t) => (maxHue / interval) * (interval - ((t + period) % interval));
-
-      let fArray = [
-        [ maxF, incF, minF ],
-        [ decF, maxF, minF ],
-        [ minF, maxF, incF ],
-        [ minF, decF, maxF ],
-        [ incF, minF, maxF ],
-        [ maxF, minF, decF ]
-      ];
-
-      const hue = (t, deltas, x) => {
-        let i = Math.floor( (t + period) / interval) % 6
-        if (fArray[i] === undefined) {
-          return null;
-        }
-        return fArray[i].map( (f, idx) => {
-          let resultHue = Math.round(f(t))
-
-          if (this.parent) {
-
-            resultHue -= deltas[idx](x) / 2
-
-          } else if (this.isSuper) {
-
-            resultHue += deltas[idx](x) / 2
-          }
-          return resultHue;
-        })
-      }
-
       let theta = this.angleTo(this.light)
       let x = this.pos[0];
       let y = this.pos[1];
       let shiftScale = this.shiftSlider.getRatio()
-      let deltas = [
-        (t) => cosFunc((t + shift) * Math.PI  / 200) * maxIterations * (10 + 20 * shiftScale),
-        (t) => sinFunc((t + shift) * Math.PI / 200) * maxIterations * (10 + 10 * shiftScale),
-        (t) => -cosFunc((t + shift) * Math.PI / 200) * maxIterations * (10 + 20 * shiftScale)
-      ]
+      let deltas = this.buildDeltas(t, shift, maxIterations, shiftScale);
 
-      let hues = hue(theta * x * 8 / y, deltas, x);
+      let hues = this.hue_Function(fArray, period, interval, this.t_Function(theta, x, y), deltas, x);
       if (flipTrig) {
-        hues = hue(shift, deltas, x);
+        hues = this.hue_Function(fArray, period, interval, shift, deltas, x);
       }
       let maxOverflow = 555;
       let overflow = 0;
       
-      let getOverflow = (h) => Math.max(h - maxHue, 0);
+      let getOverflow = (h) => Math.max(h - this.maxHue, 0);
 
 
       if (hues) {
