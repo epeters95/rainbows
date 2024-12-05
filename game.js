@@ -24,31 +24,25 @@
   const sliderStart = 97;
 
   // Configuration input
-  let useCurve = false;
-  let useOverflow = false;
-  let useFlipTrig = false;
-  let useSingles = false;
+  
+  let drawOptions = {};
 
-  const curveSwitch = document.getElementById("curve_switch");
-  const overflowSwitch = document.getElementById("overflow_switch");
-  const flipTrigSwitch = document.getElementById("flip_trig");
-  const singlesSwitch = document.getElementById("singles");
+  let optionInputs = Array.from(document.getElementsByClassName("drawOption"));
+  let optionNames = optionInputs.map((opt) => opt.id);
 
-  curveSwitch.addEventListener("click", () => {
-    useCurve = curveSwitch.checked;
-  });
+  for (let i = 0; i < optionInputs.length; i++) {
 
-  overflowSwitch.addEventListener("click", () => {
-    useOverflow = overflowSwitch.checked;
-  });
+    let optInput = optionInputs[i];
+    
+    optInput.addEventListener("click", () => {
+      drawOptions[optInput.id] = optInput.checked;
+    });
+  }
 
-  flipTrigSwitch.addEventListener("click", () => {
-    useFlipTrig = flipTrigSwitch.checked;
-  });
-
-  singlesSwitch.addEventListener("click", () => {
-    useSingles = singlesSwitch.checked;
-  })
+  // const curveSwitch = document.getElementById("curve");
+  // const overflowSwitch = document.getElementById("overflow");
+  // const flipTrigSwitch = document.getElementById("fliptrig");
+  // const singlesSwitch = document.getElementById("singles");
 
   class Game {
 
@@ -164,13 +158,13 @@
       window.clearInterval(this.endID);
     }
     
-    draw(useCurve=false, useOverflow=false, useFlipTrig=false, useSingles=false) {
+    draw(options) {
       this.ctx.clearRect(0, 0, canvasWidth, canvasHeight);
       this.ctx.fillStyle = "black";
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
       for (let i = 0; i < this.droplets.length; i++) {
-        this.droplets[i].draw(this.ctx, useCurve, useOverflow, useFlipTrig, useSingles);
+        this.droplets[i].draw(this.ctx, options);
       }
 
       this.light.draw(this.ctx);
@@ -242,7 +236,17 @@
     step() {
       
       this.move();
-      this.draw(useCurve, useOverflow, useFlipTrig);
+
+      let options = {}
+
+      optionNames.each((opt) => {
+
+        // Initialize default expected options to false
+        options.opt = false;
+      
+      });
+
+      this.draw(options);
       this.light.rotate();
 
       if (this.light.pos[0] < 0) {
