@@ -27,10 +27,12 @@
   let useCurve = false;
   let useOverflow = false;
   let useFlipTrig = false;
+  let useSingles = false;
 
   const curveSwitch = document.getElementById("curve_switch");
   const overflowSwitch = document.getElementById("overflow_switch");
   const flipTrigSwitch = document.getElementById("flip_trig");
+  const singlesSwitch = document.getElementById("singles");
 
   curveSwitch.addEventListener("click", () => {
     useCurve = curveSwitch.checked;
@@ -43,6 +45,10 @@
   flipTrigSwitch.addEventListener("click", () => {
     useFlipTrig = flipTrigSwitch.checked;
   });
+
+  singlesSwitch.addEventListener("click", () => {
+    useSingles = singlesSwitch.checked;
+  })
 
   class Game {
 
@@ -158,13 +164,13 @@
       window.clearInterval(this.endID);
     }
     
-    draw(useCurve=false, useOverflow=false, useFlipTrig=false) {
+    draw(useCurve=false, useOverflow=false, useFlipTrig=false, useSingles=false) {
       this.ctx.clearRect(0, 0, canvasWidth, canvasHeight);
       this.ctx.fillStyle = "black";
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
       for (let i = 0; i < this.droplets.length; i++) {
-        this.droplets[i].draw(this.ctx, useCurve, useOverflow, useFlipTrig);
+        this.droplets[i].draw(this.ctx, useCurve, useOverflow, useFlipTrig, useSingles);
       }
 
       this.light.draw(this.ctx);

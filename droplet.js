@@ -109,7 +109,7 @@
       return new Droplet(pos, vel, light, slider, shiftSlider, false, isSuper);
     }
 
-    draw(ctx, curved=false, overflow=false, flipTrig=false) {
+    draw(ctx, curved=false, overflow=false, flipTrig=false, useSingles=false) {
       this.color = this.getColor(overflow, flipTrig);
       ctx.beginPath()
 
@@ -133,7 +133,7 @@
       }
       ctx.strokeStyle = this.color;
       ctx.stroke();
-      if (this.parent) {
+      if (this.parent && !useSingles) {
         this.subDroplet.draw(ctx, curved)
         this.superDroplet.draw(ctx, curved)
       }
