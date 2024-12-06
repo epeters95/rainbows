@@ -111,7 +111,7 @@
 
     draw(ctx, options) {
       // options = {
-      //   curved:
+      //   curve:
       //   overflow:
       //   fliptrig:
       //   singles:
@@ -119,7 +119,7 @@
       this.color = this.getColor(options.overflow, options.fliptrig);
       ctx.beginPath()
 
-      if (curved) {
+      if (options.curve) {
         ctx.arc(
           this.pos[0] * (0.75 + this.getPositionOffsetX()),
           this.pos[1] * (0.75 + this.getPositionOffsetY()),
@@ -139,9 +139,9 @@
       }
       ctx.strokeStyle = this.color;
       ctx.stroke();
-      if (this.parent && !useSingles) {
-        this.subDroplet.draw(ctx, options.curve)
-        this.superDroplet.draw(ctx, options.curve)
+      if (this.parent && !options.singles) {
+        this.subDroplet.draw(ctx, options)
+        this.superDroplet.draw(ctx, options)
       }
     }
 

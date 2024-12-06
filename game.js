@@ -23,21 +23,6 @@
   const sliderY = 0;
   const sliderStart = 97;
 
-  // Configuration input
-  
-  let drawOptions = {};
-
-  let optionInputs = Array.from(document.getElementsByClassName("drawOption"));
-  let optionNames = optionInputs.map((opt) => opt.id);
-
-  for (let i = 0; i < optionInputs.length; i++) {
-
-    let optInput = optionInputs[i];
-    
-    optInput.addEventListener("click", () => {
-      drawOptions[optInput.id] = optInput.checked;
-    });
-  }
 
   // const curveSwitch = document.getElementById("curve");
   // const overflowSwitch = document.getElementById("overflow");
@@ -70,6 +55,21 @@
       this.startTime;
       this.time = 0;
       this.rotationValue = 0;
+
+      // Configuration input
+      // Grab checkbox options from DOM and send as object
+
+      this.drawOptions = {};
+
+      let optionInputs = Array.from(document.getElementsByClassName("drawOption"));
+      this.optionNames = optionInputs.map((opt) => opt.id);
+
+      optionInputs.forEach((optInput) => {
+        
+        optInput.addEventListener("click", () => {
+          this.drawOptions[optInput.id] = optInput.checked;
+        });
+      });
 
       const canvasPosition = {
         x: this.canvas.offsetLeft,
@@ -158,13 +158,13 @@
       window.clearInterval(this.endID);
     }
     
-    draw(options) {
+    draw() {
       this.ctx.clearRect(0, 0, canvasWidth, canvasHeight);
       this.ctx.fillStyle = "black";
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
       for (let i = 0; i < this.droplets.length; i++) {
-        this.droplets[i].draw(this.ctx, options);
+        this.droplets[i].draw(this.ctx, this.drawOptions);
       }
 
       this.light.draw(this.ctx);
@@ -237,16 +237,7 @@
       
       this.move();
 
-      let options = {}
-
-      optionNames.each((opt) => {
-
-        // Initialize default expected options to false
-        options.opt = false;
-      
-      });
-
-      this.draw(options);
+      this.draw();
       this.light.rotate();
 
       if (this.light.pos[0] < 0) {
