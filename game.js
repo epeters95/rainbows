@@ -23,12 +23,6 @@
   const sliderY = 0;
   const sliderStart = 97;
 
-
-  // const curveSwitch = document.getElementById("curve");
-  // const overflowSwitch = document.getElementById("overflow");
-  // const flipTrigSwitch = document.getElementById("fliptrig");
-  // const singlesSwitch = document.getElementById("singles");
-
   class Game {
 
     constructor(canvas) {

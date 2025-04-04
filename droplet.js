@@ -191,7 +191,7 @@
 
       if (flipTrig) {
         sinFunc, cosFunc = cosFunc, tanFunc
-        iterationMultiplier = 4;
+        iterationMultiplier = 8;
       }
 
       // Parametrized Hue function
@@ -210,9 +210,11 @@
       let shiftScale = this.shiftSlider.getRatio()
       let deltas = this.buildDeltas(shift, maxIterations, shiftScale);
 
-      let hues = this.hue_Function(period, interval, this.t_Function(theta, x, y), deltas, x);
+      let hues;
       if (flipTrig) {
         hues = this.hue_Function(period, interval, shift, deltas, x);
+      } else {
+        hues = this.hue_Function(period, interval, this.t_Function(theta, x, y), deltas, x);
       }
       let maxOverflow = 555;
       let overflow = 0;
