@@ -59,6 +59,12 @@
       // Configuration input
       // Grab checkbox options from DOM and send as object
 
+      // Options:
+      //   Curve Trajectory
+      //   Overflow to Alpha
+      //   Flip Trig Functions
+      //   Single droplets
+
       this.drawOptions = {};
 
       let optionInputs = Array.from(document.getElementsByClassName("drawOption"));

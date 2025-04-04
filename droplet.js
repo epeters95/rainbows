@@ -56,15 +56,20 @@
         }
         return fArray[i].map( (f, idx) => {
           let resultHue = Math.round(f(t))
+          let delt = deltas[idx](x) / 2;
 
-          if (this.parent) {
+          if (!isNaN(delt)) {
 
-            resultHue -= deltas[idx](x) / 2
+            if (this.parent) {
 
-          } else if (this.isSuper) {
+              resultHue -= delt
 
-            resultHue += deltas[idx](x) / 2
+            } else if (this.isSuper) {
+
+              resultHue += delt
+            }
           }
+
           return resultHue;
         })
       };
@@ -172,7 +177,7 @@
       return offset
     }
 
-    getColor(overflowToAlpha=false, flipTrig=false) {
+    getColor(overflowToAlpha, flipTrig) {
 
       let r = '255';
       let g = '255';
